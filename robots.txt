@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://standardweather.github.io/sitemap.xml

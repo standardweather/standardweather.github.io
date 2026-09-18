@@ -1,9 +1,7 @@
 # Standard Weather
 
-Public site for Standard Weather Forensics & Consulting.
+Public site: https://standardweather.github.io
 
-Live: https://standardweather.github.io
+Static GitHub Pages (`.nojekyll`). Contact form → FormSubmit → standardwx@gmail.com.
 
-Static HTML on GitHub Pages (`.nojekyll`).
-
-Contact form posts to FormSubmit → `standardwx@gmail.com`. Confirm the inbox on the first submission.
+SEO: title/meta/OG/JSON-LD + `robots.txt` + `sitemap.xml`.
