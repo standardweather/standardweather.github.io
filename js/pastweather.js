@@ -161,7 +161,7 @@
 
   function miles(km) {
     if (km == null) return "";
-    return `${Math.round(km * 0.621371)} mi`;
+    return `${Math.round(km * 0.621371 * 10) / 10} miles`;
   }
 
   // —— Geocode (Nominatim + lat,lon + session cache) ——

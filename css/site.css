@@ -587,3 +587,30 @@ button:disabled {
   color: var(--ink-soft);
 }
 .site-footer p { margin: 0 auto; max-width: none; }
+
+
+/* PastWeather responsive */
+.pw-helper { max-width: min(42rem, 100%); }
+.pw-query { max-width: min(42rem, 100%); }
+.pw-results { max-width: min(72rem, 100%); width: 100%; }
+@media (min-width: 900px) {
+  .shell, .site-header .inner, main {
+    max-width: 72rem;
+  }
+  .pw-results { max-width: 72rem; }
+  #radar-map,
+  .radar-wrap #radar-map,
+  .demo-radar,
+  .radar-loading,
+  .radar-empty {
+    height: min(52vh, 560px) !important;
+  }
+}
+@media (max-width: 639px) {
+  #radar-map,
+  .demo-radar,
+  .radar-loading,
+  .radar-empty {
+    height: 260px !important;
+  }
+}
