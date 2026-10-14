@@ -405,7 +405,7 @@
         attributionControl: true,
       }).setView([lat, lon], 8);
       basemapLayer = L.tileLayer(
-        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
         { maxZoom: 16, attribution: "Esri" }
       ).addTo(map);
     } else {
@@ -413,10 +413,10 @@
     }
     if (marker) map.removeLayer(marker);
     marker = L.circleMarker([lat, lon], {
-      radius: 7,
-      color: "#2A1C14",
-      weight: 2,
-      fillColor: "#F2F0E6",
+      radius: 8,
+      color: "#FFFFFF",
+      weight: 2.5,
+      fillColor: "#4AD1FF",
       fillOpacity: 1,
     }).addTo(map);
     setTimeout(() => map.invalidateSize(), 80);
@@ -510,6 +510,7 @@
     const frag = document.createDocumentFragment();
     reports.slice(0, 12).forEach((r) => {
       const li = document.createElement("li");
+      if (r.type) li.className = String(r.type).toLowerCase();
       const mag = r.magnitude ? ` · ${r.magnitude}` : "";
       const dist = miles(r.distanceKm);
       const timePart = r.timeUtc ? ` · ${formatReportTime(r.timeUtc)}` : "";

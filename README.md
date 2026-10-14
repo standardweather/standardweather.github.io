@@ -12,7 +12,7 @@ Static GitHub Pages (`.nojekyll`). Contact form → FormSubmit → standardwx@gm
 | `about.html` | About Standard Weather / forensic meteorology |
 | `pastweather.html` | PastWeather — live IEM radar + SPC reports (Leaflet) |
 
-Shared: `css/site.css`, `js/pastweather.js`, `logo.png`.
+Shared: `css/site.css`, `js/pastweather.js`, `logo.png` (dark ink, used for link previews), and `assets/` (white seal for the dark theme, favicons, PastWeather icon).
 
 ## Upload to GitHub Pages
 
