@@ -10,9 +10,9 @@ Static GitHub Pages (`.nojekyll`). Contact form → FormSubmit → standardwx@gm
 |------|---------|
 | `index.html` | Home — services + contact |
 | `about.html` | About Standard Weather / forensic meteorology |
-| `pastweather.html` | PastWeather — live IEM radar + SPC reports (Leaflet) |
+| `pastweather.html` | Redirect to [PastWeather](https://standardweather.github.io/PastWeather/) (separate `standardweather/PastWeather` repo) |
 
-Shared: `css/site.css`, `js/pastweather.js`, `logo.png` (dark ink, used for link previews), and `assets/` (white seal for the dark theme, favicons, PastWeather icon).
+Shared: `css/site.css`, `logo.png` (dark ink, used for link previews), and `assets/` (white seal for the dark theme, favicons).
 
 ## Upload to GitHub Pages
 
@@ -29,17 +29,4 @@ python3 -m http.server 8080
 # open http://localhost:8080/
 ```
 
-PastWeather needs network access to IEM, SPC, and Nominatim. Geocode is rate-limited; prefer `lat, lon` if Nominatim throttles.
-
-## PastWeather data (Developer)
-
-Live client-side fetches (no API keys, no proxy):
-
-- Radar scans: `https://mesonet.agron.iastate.edu/json/radar.py?operation=list&radar=USCOMP&product=N0Q&start=…&end=…`
-- Tiles: `https://mesonet.agron.iastate.edu/c/tile.py/1.0.0/ridge::USCOMP-N0Q-{YYYYMMDDHHMI}/{z}/{x}/{y}.png`
-- SPC: `https://www.spc.noaa.gov/climo/reports/{YYMMDD}_rpts_filtered.csv` (GET only, no custom headers)
-- Geocode: Nominatim + `lat, lon` paste; sessionStorage cache
-
-Hooks on `window.PastWeather`: `fetchRadar`, `fetchReports`, `geocodePlace`, `iemRadarTileTemplate`, `spcFilteredCsvUrl`.
-
-Demo radar/reports appear only if live fetch fails.
+PastWeather itself lives in the `standardweather/PastWeather` repo; its data sources are documented there.
