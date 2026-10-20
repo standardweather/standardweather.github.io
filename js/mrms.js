@@ -9,6 +9,7 @@
  *   SeamlessHSR_00.00             reflectivity, every 2 minutes (radar loop)
  *   MESH_Max_1440min_00.50        largest estimated hail size in the previous 24 hours (mm)
  *   RotationTrack1440min_00.50    strongest low-level rotation (azimuthal shear, 10⁻³ s⁻¹) in the previous 24 hours
+ *   MultiSensor_QPE_24H_Pass2     rainfall in the previous 24 hours, radar and gauges combined (mm), hourly
  */
 (function () {
   "use strict";
@@ -55,6 +56,10 @@
   // motion, so the scale starts there; 10+ is strong and 15+ often accompanies tornadoes.
   const ROT_STOPS = [[8, [255, 209, 102]], [10, [247, 140, 107]], [12, [239, 71, 111]], [15, [201, 24, 74]], [20, [140, 0, 120]]];
   const ROTATION = (s) => { let c = null; for (const [v, rgb] of ROT_STOPS) if (s >= v) c = rgb; return c; };
+  // Rain: millimetres, banded at 0.1, 0.25, 0.5, 1, 2, 3, 5 and 8 inches.
+  const RAIN_STOPS = [[2.54, [120, 200, 120]], [6.35, [40, 160, 80]], [12.7, [30, 120, 200]], [25.4, [80, 80, 220]],
+    [50.8, [170, 60, 210]], [76.2, [230, 60, 150]], [127, [255, 120, 60]], [203.2, [255, 220, 90]]];
+  const RAIN = (mm) => { let c = null; for (const [v, rgb] of RAIN_STOPS) if (mm >= v) c = rgb; return c; };
 
   const PRODUCTS = {
     reflectivity: { path: "CONUS/SeamlessHSR_00.00", color: REFLECTIVITY, opacity: 0.8 },
@@ -62,6 +67,7 @@
     rotation: { path: "CONUS/RotationTrack1440min_00.50", color: ROTATION, opacity: 0.9 },
     hail60: { path: "CONUS/MESH_Max_60min_00.50", color: HAIL, opacity: 0.85 },
     rotation60: { path: "CONUS/RotationTrack60min_00.50", color: ROTATION, opacity: 0.9 },
+    rain24: { path: "CONUS/MultiSensor_QPE_24H_Pass2_00.00", color: RAIN, opacity: 0.75 },
   };
 
   // —— Finding files ————————————————————————————————————————————————————
@@ -382,6 +388,7 @@
     legends: {
       hail: HAIL_STOPS.map(([mm, rgb]) => [mm / 25.4, rgb]),
       rotation: ROT_STOPS,
+      rain: RAIN_STOPS.map(([mm, rgb]) => [mm / 25.4, rgb]),
     },
   };
 })();

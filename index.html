@@ -96,11 +96,30 @@
             <p>Objective atmospheric analysis for operational planning. We review data models and present the statistical likelihood of specific weather conditions so you can plan with a clear picture of risk.</p>
           </article>
         </div>
-        <p class="soft-link">Looking up archived radar and storm reports? Try <a href="/PastWeather/">PastWeather</a>.</p>
+        <p class="soft-link">Looking up archived radar and storm reports, or a property's hail history? Try <a href="/PastWeather/">PastWeather</a>.</p>
         <p class="soft-link">What's happening right now? See live warnings, SPC outlooks, storm reports and radar in <a href="/NowWeather/">NowWeather</a>.</p>
         <p class="soft-link">Want a look at what's coming? See GFS model forecast maps in <a href="/FutureWeather/">FutureWeather</a>.</p>
         <p class="soft-link">Tracking the tropics? See live storms, model guidance, recon and satellite in <a href="/TropicalWeather/">TropicalWeather</a>.</p>
         <p class="soft-link">Flying? See flight categories, TAFs, SIGMETs, G-AIRMETs and PIREPs in <a href="/AviationWeather/">AviationWeather</a>.</p>
+      </section>
+
+      <section id="reports" aria-labelledby="reports-h">
+        <h2 id="reports-h">What a certified report contains</h2>
+        <ul class="steps">
+          <li>
+            <strong>The question</strong>
+            <p>The place, the date and time window, and what has to be established: hail size, peak wind, rainfall, timing, or whether a storm reached the site at all.</p>
+          </li>
+          <li>
+            <strong>The record</strong>
+            <p>Radar, hail-size and rotation analyses, nearby station observations, and official storm reports, each cited to its source so it can be checked and reproduced.</p>
+          </li>
+          <li>
+            <strong>The finding</strong>
+            <p>What the data show at the site, stated with its uncertainty and documented for a claim file, a deposition or a court.</p>
+          </li>
+        </ul>
+        <p class="soft-link">Want a free first look? Run the place and date in <a href="/PastWeather/">PastWeather</a> and print its summary, then use <b>Request a certified report</b> to send it to us. See <a href="/events.html">notable events</a> for examples.</p>
       </section>
 
       <section id="contact" aria-labelledby="contact-h">
@@ -125,6 +144,20 @@
           </div>
           <button type="submit">Submit request</button>
         </form>
+        <script>
+          // Pages like PastWeather link here with the event filled in: /?request=report&place=…&when=…#contact
+          (function () {
+            var p = new URLSearchParams(location.search);
+            if (p.get("request") !== "report") return;
+            var place = p.get("place") || "", when = p.get("when") || "";
+            var lines = ["Request: certified weather report", "Location: " + place + (p.get("lat") ? " (" + p.get("lat") + ", " + p.get("lon") + ")" : ""), "Date and time: " + when];
+            if (p.get("through")) lines.push("Through: " + p.get("through"));
+            if (p.get("link")) lines.push("PastWeather view: " + p.get("link"));
+            lines.push("", "What happened and what needs to be established (hail, wind, rain, timing):", "");
+            document.getElementById("inquiry").value = lines.join("\n");
+            document.querySelector('#contact-form [name="_subject"]').value = "Certified report request: " + place + ", " + when;
+          })();
+        </script>
       </section>
     </main>
   </div>
