@@ -10,6 +10,7 @@ Static GitHub Pages (`.nojekyll`). Contact form → FormSubmit → standardwx@gm
 |------|---------|
 | `index.html` | Home — services + contact |
 | `about.html` | About Standard Weather / forensic meteorology |
+| `profile.html` | Property weather profile (`js/profile.js`): hail, wind and tornado history from PastWeather's tiles, hurricanes within 50 mi from TropicalWeather's HURDAT2 files, FEMA flood zone, USGS ground height, NWS alerts and 7-day forecast |
 | `pastweather.html` | Redirect to [PastWeather](https://standardweather.github.io/PastWeather/) (separate `standardweather/PastWeather` repo) |
 | — | [FutureWeather](https://standardweather.github.io/FutureWeather/) lives in the separate `standardweather/FutureWeather` repo and loads `css/site.css` from this site |
 

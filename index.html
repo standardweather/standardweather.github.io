@@ -96,6 +96,7 @@
             <p>Objective atmospheric analysis for operational planning. We review data models and present the statistical likelihood of specific weather conditions so you can plan with a clear picture of risk.</p>
           </article>
         </div>
+        <p class="soft-link">Checking a property? Get its hail, wind, tornado and hurricane history, flood zone and elevation in one <a href="/profile.html">property weather profile</a>.</p>
         <p class="soft-link">Looking up archived radar and storm reports, or a property's hail history? Try <a href="/PastWeather/">PastWeather</a>.</p>
         <p class="soft-link">What's happening right now? See live warnings, SPC outlooks, storm reports and radar in <a href="/NowWeather/">NowWeather</a>.</p>
         <p class="soft-link">Want a look at what's coming? See GFS model forecast maps in <a href="/FutureWeather/">FutureWeather</a>.</p>
@@ -150,12 +151,12 @@
             var p = new URLSearchParams(location.search);
             if (p.get("request") !== "report") return;
             var place = p.get("place") || "", when = p.get("when") || "";
-            var lines = ["Request: certified weather report", "Location: " + place + (p.get("lat") ? " (" + p.get("lat") + ", " + p.get("lon") + ")" : ""), "Date and time: " + when];
+            var lines = ["Request: certified weather report", "Location: " + place + (p.get("lat") ? " (" + p.get("lat") + ", " + p.get("lon") + ")" : ""), "Date and time: " + (when || "(to be filled in)")];
             if (p.get("through")) lines.push("Through: " + p.get("through"));
-            if (p.get("link")) lines.push("PastWeather view: " + p.get("link"));
+            if (p.get("link")) lines.push("Standard Weather view: " + p.get("link"));
             lines.push("", "What happened and what needs to be established (hail, wind, rain, timing):", "");
             document.getElementById("inquiry").value = lines.join("\n");
-            document.querySelector('#contact-form [name="_subject"]').value = "Certified report request: " + place + ", " + when;
+            document.querySelector('#contact-form [name="_subject"]').value = "Certified report request: " + place + (when ? ", " + when : "");
           })();
         </script>
       </section>
