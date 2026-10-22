@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Case File | Standard Weather</title>
+  <meta name="description" content="One printable case file for a place and time: archived radar, hail, storm reports, NWS warnings, lightning, observations, a written account, the hurricane wind-or-water timeline and the airport weather record." />
+  <meta name="theme-color" content="#070914" />
+  <link rel="canonical" href="https://standardweather.github.io/case.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://standardweather.github.io/case.html" />
+  <meta property="og:title" content="Weather Case File | Standard Weather" />
+  <meta property="og:description" content="PastWeather, TropicalWeather and AviationWeather records for a place and time, in one PDF." />
+  <meta property="og:image" content="https://standardweather.github.io/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="stylesheet" href="css/site.css?v=20261014a" />
+  <style>
+    .case-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.7rem 0.9rem; margin-top: 0.9rem; align-items: end; }
+    .case-form label { display: block; font-size: 0.82rem; opacity: 0.75; margin-bottom: 0.25rem; }
+    .case-form input[type="text"] { width: 100%; box-sizing: border-box; }
+    .case-form .wide { grid-column: 1 / -1; }
+    .case-form .checks { display: flex; flex-wrap: wrap; gap: 0.4rem 1.3rem; font-size: 0.9rem; }
+    .case-form .checks label { display: flex; align-items: center; gap: 0.45rem; opacity: 1; margin: 0; }
+    .case-form .err { color: #ff8a80; margin: 0; font-size: 0.9rem; }
+    .progress { list-style: none; padding: 0; margin: 1.2rem 0 0; font-size: 0.92rem; }
+    .progress li { display: flex; gap: 0.6rem; padding: 0.3rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+    .progress li b { width: 1.2rem; text-align: center; }
+    .progress li small { opacity: 0.65; margin-left: auto; text-align: right; }
+    .case-bar { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; margin: 1.4rem 0 0.8rem; }
+    #frames { position: absolute; left: -12000px; top: 0; width: 1200px; height: 820px; overflow: hidden; }
+    #frames iframe { width: 1200px; height: 820px; border: 0; }
+
+    /* The case file itself: a white page, in print and on screen. */
+    .paper { background: #fff; color: #161616; border-radius: 6px; padding: 0.55in 0.6in; font: 10.5pt/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45); }
+    .paper * { color: inherit; }
+    .paper h1 { font: 700 21pt Outfit, system-ui, sans-serif; margin: 0 0 0.05in; color: #000; }
+    .paper h2 { font: 600 14pt Outfit, system-ui, sans-serif; margin: 0.3in 0 0.08in; padding-bottom: 0.04in; border-bottom: 2px solid #111; color: #000; }
+    .paper h3, .paper .case-sec h1, .paper .case-sec h2 { font: 600 11.5pt Outfit, system-ui, sans-serif; margin: 0.2in 0 0.06in; padding: 0; border-bottom: 1px solid #bbb; color: #000; }
+    .paper h5 { font: 600 10.5pt system-ui, sans-serif; margin: 0.16in 0 0.04in; color: #000 !important; }
+    .paper p { margin: 0.05in 0; max-width: none; }
+    .paper .meta, .paper .note, .paper small, .paper .chart-key { color: #555; font-size: 8.8pt; }
+    .paper small { display: block; }
+    .paper table { width: 100%; border-collapse: collapse; font-size: 8.8pt; margin: 0.04in 0; }
+    .paper th, .paper td { text-align: left; padding: 2px 5px; border-bottom: 1px solid #ddd; vertical-align: top; color: #161616; background: none !important; }
+    .paper dl { display: grid; grid-template-columns: max-content 1fr; gap: 1px 12px; margin: 0.05in 0; font-size: 9.5pt; }
+    .paper dt { color: #555; }
+    .paper dd { margin: 0; }
+    .paper pre[style] { color: #111 !important; }
+    .paper h2, .paper h3, .paper h5 { break-after: avoid; }
+    .paper img.map, .paper svg.chart, .paper tr { break-inside: avoid; }
+    .paper .raw, .paper pre { font: 8.6pt/1.4 "IBM Plex Mono", ui-monospace, monospace; white-space: pre-wrap; background: #f3f3f3; padding: 4px 6px; border-radius: 3px; color: #111; }
+    .paper .fc { font: 600 8pt "IBM Plex Mono", monospace; padding: 0 4px; border-radius: 3px; color: #000 !important; }
+    .paper .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+    .paper summary { display: none; }
+    .paper svg.chart { width: 100%; max-width: 5.5in; height: auto; background: #fafafa; border: 1px solid #ddd; }
+    .paper svg.chart text { fill: #555 !important; }
+    .paper svg.chart line { stroke: #ddd !important; }
+    .paper img.map { display: block; width: 100%; height: auto; border-radius: 3px; margin: 0.08in 0; }
+    .paper .cover { display: grid; grid-template-columns: 1fr auto; gap: 0.2in; align-items: start; border-bottom: 3px solid #111; padding-bottom: 0.15in; }
+    .paper .cover img { width: 0.9in; height: 0.9in; filter: invert(1) grayscale(1); }
+    .paper .facts { display: grid; grid-template-columns: max-content 1fr; gap: 2px 14px; margin-top: 0.12in; font-size: 10pt; }
+    .paper .facts dt { color: #555; }
+    .paper .toc { margin: 0.06in 0 0; padding-left: 1.2em; }
+    .paper .case-sec { break-before: page; }
+    .paper .case-sec:first-of-type { break-before: auto; }
+    .paper .missing { color: #8a5a00; }
+    @media print {
+      @page { margin: 0.5in; }
+      body { background: #fff !important; }
+      .site-nav, .page-header, #build, .case-bar, .progress, .site-footer, #intro { display: none !important; }
+      .shell, main { padding: 0 !important; margin: 0 !important; max-width: none !important; }
+      .paper { box-shadow: none; border-radius: 0; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary">
+    <div class="site-nav__inner">
+      <a class="site-nav__brand" href="index.html">
+        <img src="assets/logo-light.png" width="32" height="32" alt="" />
+        Standard Weather
+      </a>
+      <ul class="site-nav__links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/PastWeather/">PastWeather</a></li>
+        <li><a href="/NowWeather/">NowWeather</a></li>
+        <li><a href="/FutureWeather/">FutureWeather</a></li>
+        <li><a href="/TropicalWeather/">TropicalWeather</a></li>
+        <li><a href="/AviationWeather/">AviationWeather</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="shell">
+    <header class="page-header">
+      <img class="logo" src="assets/logo-light.png" width="184" height="184" alt="Standard Weather Forensics &amp; Consulting" />
+      <h1>Weather case file</h1>
+      <p class="tagline">Every record for a place and time, in one document</p>
+    </header>
+
+    <main>
+      <section id="intro" aria-labelledby="case-h">
+        <h2 id="case-h">Build a case file</h2>
+        <p>Enter a place and a UTC date and time. The case file gathers the PastWeather record (a map, a written account, radar and hail, storm reports,
+          NWS warnings, lightning, station observations and climate context), the hurricane wind-or-water timeline when a tropical cyclone was nearby,
+          and the METARs, TAFs, SIGMETs and PIREPs at the nearest airports. Print it or save it as a PDF.</p>
+        <form class="case-form" id="build" autocomplete="off">
+          <div class="wide"><label for="loc">Location</label><input type="text" id="loc" placeholder="Street address, City, ST, or lat, lon" /></div>
+          <div><label for="date">Date (UTC)</label><input type="text" id="date" placeholder="YYYY-MM-DD" inputmode="numeric" /></div>
+          <div><label for="time">Time (UTC)</label><input type="text" id="time" placeholder="HH:MM" inputmode="numeric" /></div>
+          <div><label for="ref">Reference (optional)</label><input type="text" id="ref" placeholder="Claim or file number" /></div>
+          <div><label for="for">Prepared for (optional)</label><input type="text" id="for" placeholder="Client or matter" /></div>
+          <div class="wide checks">
+            <label><input type="checkbox" id="incTropical" checked /> Hurricane wind or water (when a storm was nearby)</label>
+            <label><input type="checkbox" id="incAviation" checked /> Nearest airports' weather record</label>
+          </div>
+          <div class="wide"><button class="btn" id="go" type="submit">Build case file</button></div>
+          <p class="err wide" id="err" hidden></p>
+        </form>
+        <ul class="progress" id="progress" hidden></ul>
+      </section>
+
+      <section id="result" hidden>
+        <div class="case-bar">
+          <button class="btn" id="print" type="button">Print or save as PDF</button>
+          <a class="btn btn--secondary" id="request" href="/#contact">Request a certified report</a>
+        </div>
+        <article class="paper" id="paper"></article>
+      </section>
+    </main>
+  </div>
+
+  <div id="frames" aria-hidden="true"></div>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Standard Weather Forensics &amp; Consulting · Not a substitute for a certified weather analysis.</p>
+  </footer>
+  <script src="js/case.js?v=1"></script>
+</body>
+</html>
