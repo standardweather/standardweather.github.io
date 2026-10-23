@@ -41,23 +41,22 @@
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <meta name="color-scheme" content="dark" />
-  <link rel="stylesheet" href="css/site.css?v=20261014a" />
+  <link rel="stylesheet" href="css/site.css?v=20261023a" />
 </head>
 <body>
   <nav class="site-nav" aria-label="Primary">
     <div class="site-nav__inner">
-      <a class="site-nav__brand" href="index.html">
+      <a class="site-nav__brand" href="/" title="Standard Weather home">
         <img src="assets/logo-light.png" width="32" height="32" alt="" />
         Standard Weather
       </a>
       <ul class="site-nav__links">
-        <li><a href="/" aria-current="page">Home</a></li>
-        <li><a href="/about.html">About</a></li>
         <li><a href="/PastWeather/">PastWeather</a></li>
         <li><a href="/NowWeather/">NowWeather</a></li>
         <li><a href="/FutureWeather/">FutureWeather</a></li>
         <li><a href="/TropicalWeather/">TropicalWeather</a></li>
         <li><a href="/AviationWeather/">AviationWeather</a></li>
+        <li><a href="/about.html">About</a></li>
       </ul>
     </div>
   </nav>
@@ -84,6 +83,24 @@
         </div>
       </section>
 
+      <section id="tools" aria-labelledby="tools-h">
+        <h2 id="tools-h">Free weather tools</h2>
+        <p class="tools-label">Look up the weather</p>
+        <ul class="tools">
+          <li><a href="/PastWeather/"><b>PastWeather</b><span class="q">What happened at a place and time?</span><small>Archived radar, hail and rotation swaths, storm reports, warnings, lightning and station observations.</small></a></li>
+          <li><a href="/NowWeather/"><b>NowWeather</b><span class="q">What's happening right now?</span><small>Live radar, watches and warnings, SPC outlooks, storm reports and your place's forecast.</small></a></li>
+          <li><a href="/FutureWeather/"><b>FutureWeather</b><span class="q">What's coming?</span><small>Model forecast maps, point forecasts, forecast confidence and work windows.</small></a></li>
+          <li><a href="/TropicalWeather/"><b>TropicalWeather</b><span class="q">Is a hurricane coming, or what did one do?</span><small>Active storms, forecast cones, model tracks, recon, and past storms back to 1851.</small></a></li>
+          <li><a href="/AviationWeather/"><b>AviationWeather</b><span class="q">Is it safe to fly?</span><small>Flight categories, METARs and TAFs, SIGMETs, G-AIRMETs, PIREPs and winds aloft.</small></a></li>
+        </ul>
+        <p class="tools-label">Put it on paper</p>
+        <ul class="tools">
+          <li><a href="/case.html"><b>Weather case file</b><span class="q">The whole record for a claim, in one PDF.</span><small>Radar, hail, reports, warnings, observations, hurricane and airport records for a place and time.</small></a></li>
+          <li><a href="/profile.html"><b>Property weather profile</b><span class="q">What weather has a property seen?</span><small>Hail, wind, tornado and hurricane history, flood zone and elevation.</small></a></li>
+          <li><a href="/events.html"><b>Notable events</b><span class="q">See the tools on real storms.</span><small>Worked examples you can open in PastWeather.</small></a></li>
+        </ul>
+      </section>
+
       <section id="services" aria-labelledby="services-h">
         <h2 id="services-h">Services</h2>
         <div class="services">
@@ -96,13 +113,6 @@
             <p>Objective atmospheric analysis for operational planning. We review data models and present the statistical likelihood of specific weather conditions so you can plan with a clear picture of risk.</p>
           </article>
         </div>
-        <p class="soft-link">Need the whole record for a claim or a case? Build a <a href="/case.html">weather case file</a>: radar, hail, reports, warnings, lightning, observations, a written account, hurricane wind or water and nearby airport records for a place and time, in one PDF.</p>
-        <p class="soft-link">Checking a property? Get its hail, wind, tornado and hurricane history, flood zone and elevation in one <a href="/profile.html">property weather profile</a>.</p>
-        <p class="soft-link">Looking up archived radar and storm reports, or a property's hail history? Try <a href="/PastWeather/">PastWeather</a>.</p>
-        <p class="soft-link">What's happening right now? See live warnings, SPC outlooks, storm reports and radar in <a href="/NowWeather/">NowWeather</a>.</p>
-        <p class="soft-link">Want a look at what's coming? See GFS model forecast maps in <a href="/FutureWeather/">FutureWeather</a>.</p>
-        <p class="soft-link">Tracking the tropics? See live storms, model guidance, recon and satellite in <a href="/TropicalWeather/">TropicalWeather</a>.</p>
-        <p class="soft-link">Flying? See flight categories, TAFs, SIGMETs, G-AIRMETs and PIREPs in <a href="/AviationWeather/">AviationWeather</a>.</p>
       </section>
 
       <section id="reports" aria-labelledby="reports-h">
