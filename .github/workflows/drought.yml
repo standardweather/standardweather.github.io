@@ -1,0 +1,37 @@
+name: Collect the Drought Monitor for FarmWeather
+
+# The U.S. Drought Monitor comes out on Thursdays (valid the Tuesday before). Its GeoJSON is about 17 MB, so
+# tools/collect_drought.py simplifies it into FarmWeather/data/drought.json and this job commits the file when a
+# new week is out. Friday and Saturday runs catch a late release. Pages rebuilds the site from the commit.
+on:
+  schedule:
+    - cron: "30 17 * * 4"
+    - cron: "30 13 * * 5,6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: drought
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests shapely
+      - run: python tools/collect_drought.py
+      - name: Commit a new week
+        run: |
+          git add FarmWeather/data/drought.json
+          if git diff --cached --quiet; then echo "No new map"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Drought Monitor $(python -c 'import json;print(json.load(open("FarmWeather/data/drought.json"))["valid"])')"
+          git push

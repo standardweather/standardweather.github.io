@@ -36,6 +36,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://standardweather.github.io/FarmWeather/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://standardweather.github.io/TropicalWeather/</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
