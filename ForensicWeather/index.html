@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ForensicWeather: Forensic Meteorology &amp; Weather Expert Witness | Standard Weather</title>
+  <meta name="description" content="Forensic meteorology and weather expert witness support from Standard Weather: certified weather reports, plus free archived NOAA radar, hail swaths, storm reports, warnings, lightning and observations for any place and time." />
+  <meta name="keywords" content="forensic meteorologist, weather expert witness, forensic meteorology, weather forensics, hail damage weather analysis, wind vs water claim, historical radar" />
+  <meta name="theme-color" content="#070914" />
+  <link rel="canonical" href="https://standardweather.github.io/ForensicWeather/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://standardweather.github.io/ForensicWeather/" />
+  <meta property="og:title" content="ForensicWeather | Standard Weather" />
+  <meta property="og:description" content="Certified weather reports for legal, insurance and claims decisions, and a free look at archived radar, hail, storm reports and observations for a place and time." />
+  <meta property="og:image" content="https://standardweather.github.io/logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ForensicWeather | Standard Weather" />
+  <meta name="twitter:description" content="Certified weather reports for legal, insurance and claims decisions, and a free look at archived weather for a place and time." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Standard Weather Forensics & Consulting",
+    "url": "https://standardweather.github.io/ForensicWeather/",
+    "logo": "https://standardweather.github.io/logo.png",
+    "image": "https://standardweather.github.io/logo.png",
+    "description": "Forensic meteorology and weather expert witness consulting: certified historical weather data and site-specific atmospheric analysis for legal, insurance, and operational decisions.",
+    "email": "standardwx@gmail.com",
+    "areaServed": "United States",
+    "serviceType": [
+      "Forensic meteorology",
+      "Weather expert witness",
+      "Atmospheric consulting"
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon-64.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/css/site.css?v=20261024a" />
+  <link rel="stylesheet" href="/css/console.css?v=2" />
+  <style>
+    /* ForensicWeather: the pitch, then the lookup console at a fixed height, then services and the contact form. */
+    .fw-top { padding-bottom: 0; }
+    .fw-top .page-header { padding-bottom: 1.25rem; }
+    .fw-top .lede { margin: 0 auto 1.6rem; text-align: center; }
+    .fw-look { margin: 0 0 1.4rem; }
+    .fw-look p { margin: 0; max-width: none; padding: 0.9rem 1.1rem; border: 1px solid rgba(74, 209, 255, 0.3); border-radius: 16px; background: rgba(74, 209, 255, 0.06); font-size: 0.95rem; color: var(--text); }
+    .fw-look a { font-weight: 600; }
+    .fw-console { width: min(100% - (var(--gutter) * 2), 84rem); margin: 0 auto clamp(2.25rem, 5vw, 3.25rem); scroll-margin-top: 4.5rem; }
+    .fw-console .app { border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; }
+    @media (min-width: 761px) { .fw-console .app { height: min(86vh, 54rem); min-height: 34rem; } }
+    .side__head .fw-console__title { display: block; margin: 0; font: 600 1.05rem/1.2 var(--brand); letter-spacing: 0; text-transform: none; color: #fff; }
+    .side__head .fw-console__title::after { display: none; }
+    #contact, #services { scroll-margin-top: 4.5rem; }
+    /* Lookup console pieces (formerly PastWeather). */
+    .report { border-top: 1px solid var(--rule); padding: 0.6rem 1.25rem; cursor: pointer; }
+    .report:hover { background: rgba(255, 255, 255, 0.03); }
+    .report .t { display: flex; justify-content: space-between; gap: 0.6rem; font: 600 0.88rem var(--brand); color: #fff; }
+    .report .t span { font: 0.74rem var(--mono); color: var(--text3); white-space: nowrap; }
+    .report .m { font-size: 0.78rem; color: var(--text2); }
+    .report .c { font-size: 0.76rem; color: var(--text3); margin-top: 0.2rem; line-height: 1.45; }
+    .report.sel { background: rgba(74, 209, 255, 0.07); box-shadow: inset 3px 0 0 var(--accent); }
+    .stat { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; padding: 0.35rem 0; border-top: 1px solid var(--rule); font-size: 0.82rem; }
+    .stat:first-of-type { border-top: 0; }
+    .stat b { font: 500 1rem var(--mono); color: #fff; white-space: nowrap; }
+    .stat small { display: block; color: var(--text3); font-size: 0.72rem; }
+    .scrub .steps { display: flex; gap: 0.15rem; }
+    .scrub .steps button { padding: 0 0.25rem; font: 0.74rem var(--mono); color: var(--text2); }
+    .scrub .steps button:hover { color: #fff; }
+    .scrub .when { flex: 1; text-align: center; }
+    .hint { padding: 1rem 1.25rem; font-size: 0.84rem; color: var(--text2); line-height: 1.55; }
+    .hint b { color: #fff; }
+    .hint p { margin: 0 0 0.7rem; max-width: none; font-size: 0.84rem; color: var(--text2); line-height: 1.55; }
+    .hint ul { margin: 0 0 0.7rem; padding-left: 1.1rem; }
+    .hint li { margin: 0 0 0.35rem; }
+    .hint .dim { color: var(--text3); font-size: 0.78rem; }
+    .form details.opt summary { cursor: pointer; list-style: none; font-size: 0.78rem; color: var(--accent); }
+    .form details.opt summary::-webkit-details-marker { display: none; }
+    .form details.opt summary::before { content: "+ "; }
+    .form details.opt[open] summary { margin-bottom: 0.45rem; }
+    .form details.opt[open] summary::before { content: "− "; }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+    .actions a, .actions button { all: unset; cursor: pointer; font-size: 0.8rem; color: var(--accent); }
+    .actions a:hover, .actions button:hover { text-decoration: underline; }
+    .actions .cta { color: #060818; background: var(--accent); padding: 0.35rem 0.7rem; border-radius: 6px; font-weight: 600; }
+    .actions .cta:hover { text-decoration: none; filter: brightness(1.1); }
+    table.t tr.go { cursor: pointer; }
+    table.t tr.go:hover { background: rgba(255, 255, 255, 0.04); }
+    .verdict { margin: 0.5rem 0 0.4rem; padding: 0.1rem 0.7rem 0.5rem; border-left: 3px solid var(--accent); background: rgba(74, 209, 255, 0.05); }
+    .verdict .note b { color: #fff; }
+    .scrub .replay-btn { min-width: 0; padding: 0.1rem 0.5rem; border: 1px solid var(--rule); border-radius: 5px; font: 0.74rem var(--mono); color: var(--accent); white-space: nowrap; }
+    .scrub .replay-btn[aria-pressed="true"] { background: var(--accent); color: #060818; }
+    .replay {
+      position: absolute; z-index: 800; left: 1rem; bottom: 3.6rem; width: min(34rem, calc(100% - 2rem));
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem 0.7rem; padding: 0.5rem 0.8rem; background: rgba(8, 10, 24, 0.88);
+      border: 1px solid var(--rule); border-radius: 8px; font: 0.74rem var(--mono); color: var(--text2);
+    }
+    .replay button { all: unset; cursor: pointer; color: #fff; }
+    .replay button:disabled { opacity: 0.35; cursor: default; }
+    .replay button[data-replay="toggle"] { min-width: 1.4rem; text-align: center; font-size: 0.85rem; }
+    .replay button[data-replay="video"] { color: var(--accent); }
+    .replay input[type="range"] { flex: 1; min-width: 6rem; appearance: auto; -webkit-appearance: auto; width: auto; min-height: 0; padding: 0; border: 0; background: none; accent-color: var(--accent); box-shadow: none; }
+    .replay .info { flex-basis: 100%; order: 3; color: var(--text3); }
+    .replay .spans { display: flex; gap: 0.7rem; order: 2; }
+    .replay .spans button { color: var(--text2); }
+    .replay .spans button[aria-pressed="true"] { color: #fff; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.3em; }
+    .account { margin-top: 0.9rem; padding-top: 0.2rem; border-top: 1px solid var(--rule); }
+    .account p { font-size: 0.82rem; line-height: 1.55; color: rgba(255, 255, 255, 0.86); margin: 0.45rem 0 0; max-width: none; }
+    .account p.note { color: var(--text3); font-size: 0.74rem; }
+    #printout { display: none; }
+    /* Print summary: the map, then the summary, reports and observations on white. */
+    body.printing .stage { width: 7.2in; height: 4.4in; flex: none; }
+    @media print {
+      @page { margin: 0.5in; }
+      body { background: #fff; }
+      .fw-top, .fw-bottom, .site-footer { display: none !important; }
+      .fw-console { width: auto; margin: 0; }
+      .fw-console .app { border: 0; border-radius: 0; }
+      .site-nav, .side, .scrub, .status, .layers, .leaflet-control-container .leaflet-control-zoom { display: none !important; }
+      .app { display: block; height: auto; }
+      .stage { width: 7.2in; height: 4.4in; break-inside: avoid; }
+      #printout { display: block; color: #111; font: 10pt/1.45 var(--font); }
+      #printout h1 { font: 600 16pt var(--brand); margin: 0.2in 0 0.05in; color: #000; }
+      #printout h2 { font: 600 11pt var(--brand); margin: 0.18in 0 0.05in; color: #000; border-bottom: 1px solid #bbb; }
+      #printout p { margin: 0.04in 0; max-width: none; color: #222; }
+      #printout table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+      #printout th, #printout td { text-align: left; padding: 2px 4px; border-bottom: 1px solid #ddd; vertical-align: top; color: #111; }
+      #printout .meta { color: #555; font-size: 8.5pt; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary">
+    <div class="site-nav__inner">
+      <a class="site-nav__brand" href="/" title="Standard Weather home">
+        <img src="/assets/logo-light.png" width="32" height="32" alt="" />
+        Standard Weather
+      </a>
+      <ul class="site-nav__links">
+        <li><a href="/ForensicWeather/" aria-current="page">ForensicWeather</a></li>
+        <li><a href="/NowWeather/">NowWeather</a></li>
+        <li><a href="/FutureWeather/">FutureWeather</a></li>
+        <li><a href="/TropicalWeather/">TropicalWeather</a></li>
+        <li><a href="/AviationWeather/">AviationWeather</a></li>
+        <li><a href="/about.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="shell fw-top">
+    <header class="page-header">
+      <h1>ForensicWeather</h1>
+      <p class="tagline">Forensic &amp; consulting meteorology</p>
+    </header>
+
+    <section id="pitch" aria-label="Forensic and consulting services">
+      <p class="lede">Standard Weather analyzes and establishes what likely happened or will happen at a location, and documents it in a certified report you can rely on.</p>
+    </section>
+
+    <div class="fw-look">
+      <p>Want a free first look? Run the place and date in the map below and print its summary, then use <b>Request a certified report</b> to send it to us. See <a href="/events.html">notable events</a> for examples.</p>
+    </div>
+  </div>
+
+  <section class="fw-console" id="lookup" aria-label="Archived weather lookup">
+    <div class="app">
+      <aside class="side" aria-label="Look up a place and time">
+        <div class="side__head"><h2 class="fw-console__title">Look up the weather</h2><time id="when"></time></div>
+        <form class="form" id="query" autocomplete="off">
+          <div>
+            <label for="location">Location</label>
+            <input id="location" placeholder="City, ST · street address · lat, lon" />
+          </div>
+          <div class="row2">
+            <div><label for="date">Date (UTC)</label><input id="date" placeholder="YYYY-MM-DD" inputmode="numeric" /></div>
+            <div><label for="time">Time (UTC)</label><input id="time" placeholder="HH:MM" inputmode="numeric" /></div>
+          </div>
+          <details class="opt" id="throughBox">
+            <summary>Add an end date, to total several days</summary>
+            <div><label for="through">Through date (UTC, up to 31 days)</label><input id="through" placeholder="YYYY-MM-DD" inputmode="numeric" /></div>
+          </details>
+          <p class="err" id="err" hidden></p>
+          <button class="btn" id="show" type="submit">Show past weather</button>
+        </form>
+        <div class="tabs" role="tablist" aria-label="View" id="views">
+          <button role="tab" data-view="summary" aria-selected="true">Summary</button>
+          <button role="tab" data-view="reports" aria-selected="false">Reports</button>
+          <button role="tab" data-view="obs" aria-selected="false">Observations</button>
+          <button role="tab" data-view="warnings" aria-selected="false">Warnings</button>
+          <button role="tab" data-view="lightning" aria-selected="false">Lightning</button>
+          <button role="tab" data-view="history" aria-selected="false">History</button>
+          <button role="tab" data-view="dol" aria-selected="false">Date of loss</button>
+          <button role="tab" data-view="winter" aria-selected="false">Ice &amp; snow</button>
+        </div>
+        <div class="scroll" id="panel">
+          <div class="hint">
+            <p><b>Start here:</b> enter a place, a UTC date and a time. You get the radar at that moment, the day's hail and rotation
+              swaths, storm reports, warnings, lightning, nearby observations, and a written account to paste into a report.</p>
+            <p>Other ways to use it:</p>
+            <ul>
+              <li>Leave the date blank to see the place's <b>hail, wind and tornado history</b> back to 1950.</li>
+              <li>Add an end date to total wind and rain over up to 31 days.</li>
+              <li><b>Date of loss</b> compares a claimed date with the days around it. <b>Ice &amp; snow</b> shows freezing weather before the time.</li>
+            </ul>
+            <p class="dim">Radar and swaths are available from October 14, 2020.</p>
+          </div>
+        </div>
+        <div class="side__foot">
+          <details class="sources"><summary>Data sources · not a certified weather analysis</summary>
+            <p>Radar, hail, rotation and rain: NOAA MRMS. Reports: NOAA SPC (preliminary) and NCEI Storm Events (official).
+            Observations: NCEI and the NWS. Warnings: NWS, archived by the Iowa Environmental Mesonet. Lightning: NOAA GOES GLM.
+            Normals and records: NOAA ACIS. Not a substitute for a certified weather analysis.</p></details>
+        </div>
+      </aside>
+
+      <section class="stage" aria-label="Map">
+        <div id="map"></div>
+        <details class="layers" id="layerBox">
+          <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="m2 13 10 5 10-5"/></svg> Layers</summary>
+          <div class="layers__body">
+            <div class="checks" id="layers">
+              <label><input type="checkbox" data-layer="radar" checked /> Radar</label>
+              <label><input type="checkbox" data-layer="reports" checked /> Storm reports</label>
+              <label><input type="checkbox" data-layer="hail" /> Hail size (24 h)</label>
+              <label><input type="checkbox" data-layer="rotation" /> Rotation (24 h)</label>
+              <label><input type="checkbox" data-layer="rain" /> Rain (24 h)</label>
+              <label><input type="checkbox" data-layer="warnings" checked /> NWS warnings</label>
+              <label><input type="checkbox" data-layer="lightning" checked /> Lightning</label>
+              <label><input type="checkbox" data-layer="stations" checked /> Stations</label>
+            </div>
+          </div>
+        </details>
+        <div class="status" id="status" hidden></div>
+        <div class="scrub" id="scrub" hidden>
+          <div class="steps" aria-label="Step back"><button data-step="-60">−60</button><button data-step="-15">−15</button><button data-step="-5">−5</button></div>
+          <span class="when" id="frameTime"></span>
+          <div class="steps" aria-label="Step forward"><button data-step="5">+5</button><button data-step="15">+15</button><button data-step="60">+60</button></div>
+          <button id="reset" title="Back to the event time" hidden>⟲</button>
+          <button id="play" class="replay-btn" title="Replay the radar around the event time" aria-pressed="false">▶ Replay</button>
+        </div>
+        <div class="replay" id="replay" hidden></div>
+      </section>
+    </div>
+  </section>
+
+  <div class="shell fw-bottom">
+    <main>
+      <section id="more" aria-labelledby="more-h">
+        <h2 id="more-h">Put it on paper</h2>
+        <ul class="tools">
+          <li><a href="/case.html"><b>Weather case file</b><small>Radar, hail, reports, warnings, observations, hurricane and airport records for a place and time, in one PDF.</small></a></li>
+          <li><a href="/profile.html"><b>Property weather profile</b><small>Hail, wind, tornado and hurricane history, flood zone and elevation for an address.</small></a></li>
+          <li><a href="/events.html"><b>Notable events</b><small>Worked examples on real storms, ready to open in the map above.</small></a></li>
+        </ul>
+      </section>
+
+      <section id="services" aria-labelledby="services-h">
+        <h2 id="services-h">Forensic and consulting services</h2>
+        <div class="services">
+          <article class="service">
+            <h3>Forensic meteorology</h3>
+            <p>Reconstruction of past weather events. We supply certified historical data to establish atmospheric conditions at a specific time and location, for legal, insurance, and investigative use, and support depositions and expert testimony.</p>
+          </article>
+          <article class="service">
+            <h3>Project consulting</h3>
+            <p>Objective atmospheric analysis for operational planning. We review data and models and present the statistical likelihood of specific weather conditions so you can plan with a clear picture of risk.</p>
+          </article>
+        </div>
+        <p class="soft-link">Our clients include attorneys, insurers, claims professionals, and organizations that need an objective weather record. Read more <a href="/about.html">about Standard Weather</a>.</p>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-h">
+        <h2 id="contact-h">Contact</h2>
+        <p>Submit your inquiry below. Include the details of your case or project, and we will follow up promptly.</p>
+        <form id="contact-form" action="https://formsubmit.co/standardwx@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Standard Weather inquiry" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" />
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="inquiry">Nature of inquiry</label>
+            <textarea id="inquiry" name="inquiry" rows="5" required></textarea>
+          </div>
+          <button type="submit">Submit request</button>
+        </form>
+        <script>
+          // "Request a certified report" (the lookup above, the case file, old home page links) fills in the form with the event:
+          // ?request=report&place=…&when=…#contact, or window.SWContact.prefill(params) from app.js.
+          window.SWContact = {
+            prefill: function (p) {
+              var place = p.get("place") || "", when = p.get("when") || "";
+              var lines = ["Request: certified weather report", "Location: " + place + (p.get("lat") ? " (" + p.get("lat") + ", " + p.get("lon") + ")" : ""), "Date and time: " + (when || "(to be filled in)")];
+              if (p.get("through")) lines.push("Through: " + p.get("through"));
+              if (p.get("link")) lines.push("Standard Weather view: " + p.get("link"));
+              lines.push("", "What happened and what needs to be established (hail, wind, rain, timing):", "");
+              document.getElementById("inquiry").value = lines.join("\n");
+              document.querySelector('#contact-form [name="_subject"]').value = "Certified report request: " + place + (when ? ", " + when : "");
+            }
+          };
+          (function () {
+            var p = new URLSearchParams(location.search);
+            if (p.get("request") === "report") window.SWContact.prefill(p);
+          })();
+        </script>
+      </section>
+      <section id="reports" aria-labelledby="reports-h">
+        <h2 id="reports-h">What a certified report contains</h2>
+        <ul class="steps">
+          <li>
+            <strong>The question</strong>
+            <p>The place, the time window, and what has to be established: hail size, peak wind, rainfall, timing, or whether a storm reached the site at all.</p>
+          </li>
+          <li>
+            <strong>The record</strong>
+            <p>Radar, hail and rotation analyses, station observations and official storm reports, each cited to its source.</p>
+          </li>
+          <li>
+            <strong>The finding</strong>
+            <p>What the data show at the site, stated with its uncertainty, ready for a claim file, a deposition or a court.</p>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <div id="printout" aria-hidden="true"></div>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Standard Weather Forensics &amp; Consulting · The free lookup is not a substitute for a certified weather analysis.</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/js/mrms.js?v=2"></script>
+  <script src="glm.js?v=1"></script>
+  <script src="app.js?v=8"></script>
+  <script>
+    // A shared lookup link (?loc=…) opens at the map rather than the pitch.
+    if (new URLSearchParams(location.search).get("loc") && !location.hash) document.getElementById("lookup").scrollIntoView();
+  </script>
+</body>
+</html>

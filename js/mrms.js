@@ -1,4 +1,4 @@
-/* Standard Weather — NOAA MRMS grids decoded in the browser (shared by PastWeather and NowWeather).
+/* Standard Weather — NOAA MRMS grids decoded in the browser (shared by ForensicWeather and NowWeather).
  *
  * Files come from NOAA's open-data bucket on AWS (noaa-mrms-pds, CORS-enabled, from 2020-10-14). Each is gzipped
  * GRIB2 whose data section is a 16-bit grayscale PNG (template 5.41) on a 7000x3500, 0.01° CONUS grid. The PNG is
