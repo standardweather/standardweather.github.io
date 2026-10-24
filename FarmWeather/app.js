@@ -8,6 +8,7 @@
  *                                    (NOAA map services, obs/rfc_qpe)
  *   RCC ACIS (data.rcc-acis.org)     PRISM daily highs, lows and rain at the field, this season and 1991–2020,
  *                                    for growing degree days, chill hours, frost dates and rain against normal
+ *   Iowa Environmental Mesonet       4-inch soil temperature from the nearest probe (Iowa State soil network, NRCS SCAN)
  *   NOAA GEFS ensemble               member agreement on work windows (FutureWeather's tiles, /js/workwindows.js)
  *   NOAA CPC outlooks                6–10 and 8–14 day layers and the outlook at the field (NOAA map services)
  *   NASA GIBS                        SMAP root-zone soil moisture layer
@@ -69,7 +70,7 @@
     hay: { name: "Cut hay", pop: 30, rain: 0, hours: 60, day: false,
       note: "Dry hay usually needs about three rain-free days to cure; haylage needs less. Sun, wind and low humidity speed drying." },
     plant: { name: "Planting", tmin: 50, pop: 30, rain: 0, hours: 8, day: true,
-      note: "Corn and soybeans want soil at 50°F and rising and no cold soaking rain in the first two days. Air temperature stands in for soil temperature here." },
+      note: "Corn and soybeans want soil at 50°F and rising and no cold soaking rain in the first two days. The windows use forecast air temperature; check the soil temperature below before planting." },
     harvest: { name: "Grain harvest", rh: 75, pop: 20, rain: 0, hours: 6, day: false,
       note: "Dew and humidity above about 75% slow combining and raise grain moisture." },
     fieldwork: { name: "Tillage & fieldwork", pop: 30, rain: 0, hours: 8, day: true,
@@ -352,6 +353,56 @@
     } catch { f.rain = null; }
   }
 
+  // —— Soil temperature at 4 inches: the nearest probe, else an estimate from recent air temperatures ——————
+  // Probes come from the Iowa Environmental Mesonet's current readings for networks that report soil temperature
+  // at 4 inches: the Iowa State soil moisture network (first sensor, 4 in) and NRCS SCAN (second sensor, 4 in).
+  const SOIL_NETWORKS = { ISUSM: "c1tmpf", SCAN: "c2tmpf" };
+  const SOIL_KM = 48.3;   // 30 miles
+  let soilProbes = null, soilProbesAt = 0;
+  async function probes() {
+    if (soilProbes && Date.now() - soilProbesAt < 30 * 60000) return soilProbes;
+    const lists = await Promise.all(Object.entries(SOIL_NETWORKS).map(([n, k]) => getJson(`https://mesonet.agron.iastate.edu/api/1/currents.json?network=${n}`)
+      .then((d) => d.data.filter((r) => r[k] != null && r.lat != null && Date.now() - Date.parse(r.utc_valid) < 6 * 3600e3)
+        .map((r) => ({ id: r.station, name: r.name, state: r.state, network: n, lat: r.lat, lon: r.lon, t: r.utc_valid, temp: r[k] })))
+      .catch(() => [])));
+    soilProbes = lists.flat();
+    soilProbesAt = Date.now();
+    return soilProbes;
+  }
+  /** Mean of the daily high/low average over the last 5 days with data (PRISM): roughly tracks 4-inch soil in spring. */
+  function soilEstimate(days) {
+    const ok = days.filter((d) => d[1] != null && d[2] != null).slice(-5);
+    return ok.length >= 3 ? { temp: ok.reduce((a, d) => a + (d[1] + d[2]) / 2, 0) / ok.length, n: ok.length, through: ok.at(-1)[0] } : null;
+  }
+  async function loadSoil(f) {
+    if (f.soil) return;
+    f.soil = "loading";
+    let soil = null;
+    try {
+      const near = (await probes()).map((p) => ({ ...p, km: kmBetween(f.lat, f.lon, p.lat, p.lon) })).filter((p) => p.km <= SOIL_KM).sort((a, b) => a.km - b.km)[0];
+      if (near) soil = { kind: "probe", ...near };
+    } catch { /* fall back to the estimate */ }
+    if (!soil) {
+      try {
+        const today = iso(new Date());
+        const est = soilEstimate(await acisDaily(f, addDays(today, -8), addDays(today, -1)));
+        if (est) soil = { kind: "estimate", ...est };
+      } catch { /* none */ }
+    }
+    f.soil = soil || { kind: "none" };
+    if (state.field === f && (state.view === "season" || state.view === "windows")) render();
+  }
+  function soilHtml(f) {
+    const s = f.soil;
+    if (!s || s === "loading") { loadSoil(f); return stat("Soil temperature, 4 in", "…", "Looking for a soil probe nearby"); }
+    if (s.kind === "none") return stat("Soil temperature, 4 in", "—", "No soil probe within 30 mi and no recent air temperatures to estimate from");
+    const v = `${Math.round(s.temp)}°F`, cold = s.temp < 50;
+    const why = cold ? "below the 50°F most corn and soybean guidance calls for" : "at or above 50°F";
+    return s.kind === "probe"
+      ? stat("Soil temperature, 4 in", v, `Measured at ${esc(s.name)}, ${esc(s.state)} (${s.network === "ISUSM" ? "Iowa State soil network" : "NRCS SCAN"}), ${mi(s.km)} mi away · ${esc(fmt(f, s.t, { weekday: "short", hour: "numeric", minute: "2-digit" }))} · ${why}`)
+      : stat("Soil temperature, 4 in (estimate)", `~${v}`, `No soil probe within 30 mi, so this is the average air temperature over the last ${s.n} days to ${esc(fmtDate(s.through))} (PRISM), a rough guide to 4-inch soil in spring · ${why}`);
+  }
+
   // —— Warned storms heading for the field (storm motion in each NWS warning, as on NowWeather) ——————————
   async function loadStorms() {
     try {
@@ -535,7 +586,7 @@
     html += `<details class="limits-box"${state.jobOpen ? " open" : ""}><summary>Limits: ${esc(jobSummary(w))}</summary>
       <form id="limits" class="limits">${JOB_FIELDS.map(([k, label]) => `<label>${label}<input name="${k}" inputmode="decimal" value="${esc(w[k] ?? "")}" placeholder="any" /></label>`).join("")}
         <label class="day"><input type="checkbox" name="day"${w.day ? " checked" : ""} /> Daylight only</label></form></details>
-      ${JOBS[w.preset].note ? `<p class="note">${esc(JOBS[w.preset].note)}</p>` : ""}</div>`;
+      ${JOBS[w.preset].note ? `<p class="note">${esc(JOBS[w.preset].note)}</p>` : ""}${w.preset === "plant" ? soilHtml(f) : ""}</div>`;
     if (!f.grid) return html + `<p class="empty">Loading the forecast for ${esc(f.name)}…</p>`;
     if (!f.ens) loadEns(f);
     const hours = WW.workHours(f.grid, f.lat, f.lon, w);
@@ -691,6 +742,7 @@
       <div class="cmp"><div><b>${pNow.toFixed(1)}"</b><small>this season</small></div><div><b>${pNorm == null ? "—" : pNorm.toFixed(1) + '"'}</b><small>normal</small></div><div><b>${pNorm ? Math.round((pNow / pNorm) * 100) + "%" : "—"}</b><small>of normal</small></div></div>
       ${seasonChart(series, [], Array.from({ length: nDays }, (_, i) => [at(i, "p", 0.1), avg(i, "p"), at(i, "p", 0.9)]), "p", start)}
       <p class="chart-key"><span style="color:#4ad1ff">━</span> this season <span style="color:rgba(255,255,255,.6)">━</span> 1991–2020 average <span style="color:rgba(255,255,255,.25)">▮</span> 10–90% of years (in)</p>`;
+    html += `<h5 class="sub" style="margin-top:1rem">Soil</h5>${soilHtml(f)}`;
     html += frostHtml(f, cur, norm, today);
     if (crop.fruit) html += chillHtml(cur, norm, today);
     html += `<p class="note">From PRISM daily highs, lows and rain (about 4 km) via the Applied Climate Information System. PRISM runs a day or two behind. Normals are the 1991–2020 average for the same dates at this spot.</p></div>`;
@@ -986,7 +1038,7 @@
     const moved = !f || f.lat !== d.lat || f.lon !== d.lon;
     if (!f) { f = { id: newId() }; state.fields.push(f); }
     Object.assign(f, { name: d.name, lat: d.lat, lon: d.lon, crop: d.crop, planted: d.planted, plantedSet: !!d.planted });
-    if (moved) ["pt", "grid", "alerts", "obs", "rain", "ens", "season", "cpc", "err"].forEach((k) => delete f[k]);
+    if (moved) ["pt", "grid", "alerts", "obs", "rain", "ens", "season", "cpc", "soil", "err"].forEach((k) => delete f[k]);
     state.editing = null;
     saveFields();
     showField(f);
