@@ -55,8 +55,9 @@
     .fw-console { width: min(100% - (var(--gutter) * 2), 84rem); margin: 0 auto clamp(2.25rem, 5vw, 3.25rem); scroll-margin-top: 4.5rem; }
     .fw-console .app { border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; }
     @media (min-width: 761px) { .fw-console .app { height: min(86vh, 54rem); min-height: 34rem; } }
-    .side__head .fw-console__title { display: block; margin: 0; font: 600 1.05rem/1.2 var(--brand); letter-spacing: 0; text-transform: none; color: #fff; }
-    .side__head .fw-console__title::after { display: none; }
+    /* No sidebar title: the head only shows the event time once there is one. */
+    .fw-console .side__head { justify-content: flex-end; padding-bottom: 0; }
+    .fw-console .side__head:has(time:empty) { display: none; }
     #contact, #services { scroll-margin-top: 4.5rem; }
     /* Lookup console pieces (formerly PastWeather). */
     .report { border-top: 1px solid var(--rule); padding: 0.6rem 1.25rem; cursor: pointer; }
@@ -171,7 +172,7 @@
   <section class="fw-console" id="lookup" aria-label="Archived weather lookup">
     <div class="app">
       <aside class="side" aria-label="Look up a place and time">
-        <div class="side__head"><h2 class="fw-console__title">Look up the weather</h2><time id="when"></time></div>
+        <div class="side__head"><time id="when"></time></div>
         <form class="form" id="query" autocomplete="off">
           <div>
             <label for="location">Location</label>
