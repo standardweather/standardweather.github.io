@@ -136,7 +136,7 @@
   }
 
 
-  // —— Severe storm history (PastWeather's 1° tiles) ——————————————————————————
+  // —— Severe storm history (1° tiles from the pastweather repo, also used by ForensicWeather) ——————————
   const RADII = [1, 3, 10];
   const tileName = (lat, lon) => { const a = Math.floor(lat), o = Math.floor(lon); return `${a >= 0 ? "N" : "S"}${pad(Math.abs(a))}${o >= 0 ? "E" : "W"}${String(Math.abs(o)).padStart(3, "0")}`; };
   const rowMs = (t) => Date.UTC(+t.slice(0, 4), +t.slice(4, 6) - 1, +t.slice(6, 8), +t.slice(8, 10), +t.slice(10, 12));
@@ -284,14 +284,14 @@
     const loading = `<p class="small">Loading…</p>`;
     $("cards").innerHTML = [
       card("Hail, wind and tornadoes", state.severe ? (state.severe.error ? `<p class="small">The storm history didn't load.</p>` : severeHtml(state.severe, state.radius)) : loading,
-        `<a href="/PastWeather/?loc=${ll}&amp;view=history">Every day in PastWeather</a>`),
+        `<a href="/ForensicWeather/?loc=${ll}&amp;view=history">Every day in ForensicWeather</a>`),
       card("Tropical storms and hurricanes", state.tropical ? (state.tropical.error ? `<p class="small">The hurricane record didn't load.</p>` : tropicalHtml(state.tropical)) : loading,
         `<a href="/TropicalWeather/?loc=${ll}">Storm by storm in TropicalWeather</a>`),
       card("Flood zone and elevation", floodHtml(state.flood, state.ground), ""),
       card("Right now", state.now ? nowHtml(state.now) : loading, `<a href="/NowWeather/?loc=${ll}">Watch this place in NowWeather</a>`),
       card("The week ahead", state.now ? weekHtml(state.now) : loading, `<a href="/FutureWeather/?loc=${ll}&amp;view=windows">Find work windows in FutureWeather</a>`),
       card("Need it certified?", `<p>This profile is a quick public look. For an insurance claim, a purchase, a lawsuit or a project, Standard Weather can certify the record for this property and a specific date.</p>`,
-        `<a href="/?${new URLSearchParams({ request: "report", place: p.label, lat: p.lat.toFixed(4), lon: p.lon.toFixed(4), when: "", link: location.href })}#contact">Request a certified report</a>`),
+        `<a href="/ForensicWeather/?${new URLSearchParams({ request: "report", place: p.label, lat: p.lat.toFixed(4), lon: p.lon.toFixed(4), when: "", link: location.href })}#contact">Request a certified report</a>`),
     ].join("");
   }
 

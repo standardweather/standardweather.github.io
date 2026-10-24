@@ -2,7 +2,7 @@
  *
  * The page opens the tools themselves in hidden frames (same site, so it can read them) and waits for each one's
  * window.SWCase hook to report "ready", then copies its section in:
- *   /PastWeather/?loc=…&date=…&time=…           map, written account, summary, reports, warnings, observations
+ *   /ForensicWeather/?loc=…&date=…&time=…       map, written account, summary, reports, warnings, observations
  *   /TropicalWeather/?loc=lat,lon&date=…          wind or water for the tropical cyclone nearest the place that week
  *   /AviationWeather/?view=past&near=lat,lon&t=…  METARs, TAFs, SIGMETs, G-AIRMETs and PIREPs at the nearest airports
  * Each hook's status() is "loading", "ready", "none" (nothing applies, e.g. no storm nearby) or "error".
@@ -14,7 +14,7 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const pad = (n) => String(n).padStart(2, "0");
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  const TIMEOUT = 180000;   // per tool; PastWeather's radar, lightning and observations can take a minute or more
+  const TIMEOUT = 180000;   // per tool; ForensicWeather's radar, lightning and observations can take a minute or more
 
   function utcText(iso) {
     return new Date(iso).toLocaleString("en-GB", { timeZone: "UTC", day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }) + " UTC";
@@ -90,20 +90,20 @@
 
   async function build(inp) {
     const sections = [];
-    step("past", "PastWeather: radar, hail, reports, warnings, lightning, observations", "run", "loading…");
-    const pastFrame = openFrame(`/PastWeather/?${new URLSearchParams({ loc: inp.loc, date: inp.date, time: inp.hhmm })}`);
-    const past = await settle(pastFrame, (s) => step("past", "PastWeather: radar, hail, reports, warnings, lightning, observations", "run", `${s} s`));
-    if (past.status === "error") { step("past", "PastWeather", "fail", past.hook.error()); throw new Error(past.hook.error() || "PastWeather couldn't find that place."); }
+    step("past", "ForensicWeather: radar, hail, reports, warnings, lightning, observations", "run", "loading…");
+    const pastFrame = openFrame(`/ForensicWeather/?${new URLSearchParams({ loc: inp.loc, date: inp.date, time: inp.hhmm })}`);
+    const past = await settle(pastFrame, (s) => step("past", "ForensicWeather: radar, hail, reports, warnings, lightning, observations", "run", `${s} s`));
+    if (past.status === "error") { step("past", "ForensicWeather", "fail", past.hook.error()); throw new Error(past.hook.error() || "ForensicWeather couldn't find that place."); }
     const place = past.hook?.place();
-    if (!place) { step("past", "PastWeather", "fail", "timed out"); throw new Error("PastWeather didn't finish loading. Try again in a minute."); }
+    if (!place) { step("past", "ForensicWeather", "fail", "timed out"); throw new Error("ForensicWeather didn't finish loading. Try again in a minute."); }
     try {
       sections.push({ key: "past", ...(await past.hook.section()), complete: past.status === "ready" });
-      step("past", "PastWeather: radar, hail, reports, warnings, lightning, observations", past.status === "ready" ? "ok" : "fail", past.status === "ready" ? "done" : "timed out; included what loaded");
+      step("past", "ForensicWeather: radar, hail, reports, warnings, lightning, observations", past.status === "ready" ? "ok" : "fail", past.status === "ready" ? "done" : "timed out; included what loaded");
     } catch (ex) {
-      step("past", "PastWeather", "fail", ex.message);
+      step("past", "ForensicWeather", "fail", ex.message);
     }
 
-    // The other tools need the place's coordinates, which PastWeather has now found.
+    // The other tools need the place's coordinates, which ForensicWeather has now found.
     const ll = `${place.lat.toFixed(4)},${place.lon.toFixed(4)}`;
     const jobs = [];
     if ($("incTropical").checked) {
@@ -141,7 +141,7 @@
   }
 
   const HEADINGS = {
-    past: "Storm data at the place (PastWeather)",
+    past: "Storm data at the place (ForensicWeather)",
     tropical: "Hurricane wind or water (TropicalWeather)",
     aviation: "Nearest airports' weather record (AviationWeather)",
   };
@@ -173,7 +173,7 @@
           Airport reports, forecasts and advisories: NWS and the Aviation Weather Center, archived by the Iowa Environmental Mesonet.</p>
         <p class="meta">Radar hail sizes and modeled hurricane winds are estimates, not measurements, and storm reports show only where hail or damage was seen.
           This case file was assembled automatically from public data and is not a certified weather analysis. For a certified report, contact Standard Weather Forensics &amp; Consulting.</p></section>`;
-    $("request").href = `/?${new URLSearchParams({ request: "report", place: place.label, lat: place.lat.toFixed(4), lon: place.lon.toFixed(4), when: utcText(place.isoUtc), link: location.href })}#contact`;
+    $("request").href = `/ForensicWeather/?${new URLSearchParams({ request: "report", place: place.label, lat: place.lat.toFixed(4), lon: place.lon.toFixed(4), when: utcText(place.isoUtc), link: location.href })}#contact`;
     document.title = `Case file · ${place.label} · ${inp.date} | Standard Weather`;
     $("result").hidden = false;
     $("result").scrollIntoView({ behavior: "smooth", block: "start" });
