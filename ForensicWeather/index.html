@@ -49,8 +49,6 @@
     .fw-top { padding-bottom: 0; }
     .fw-top .page-header { padding-bottom: 1.25rem; }
     .fw-top .lede { margin: 0 auto 1.6rem; text-align: center; }
-    .fw-top .steps li { padding: 1rem 1.1rem 1.1rem; }
-    .fw-top .steps li p { font-size: 0.92rem; }
     .fw-look { margin: 0 0 1.4rem; }
     .fw-look p { margin: 0; max-width: none; padding: 0.9rem 1.1rem; border: 1px solid rgba(74, 209, 255, 0.3); border-radius: 16px; background: rgba(74, 209, 255, 0.06); font-size: 0.95rem; color: var(--text); }
     .fw-look a { font-weight: 600; }
@@ -161,23 +159,8 @@
       <p class="tagline">Forensic &amp; consulting meteorology</p>
     </header>
 
-    <section id="pitch" aria-labelledby="pitch-h">
-      <p class="lede">When a claim, a case or a project turns on the weather, Standard Weather establishes what happened at the site and documents it in a certified report you can rely on.</p>
-      <h2 id="pitch-h">What a certified report contains</h2>
-      <ul class="steps">
-        <li>
-          <strong>The question</strong>
-          <p>The place, the time window, and what has to be established: hail size, peak wind, rainfall, timing, or whether a storm reached the site at all.</p>
-        </li>
-        <li>
-          <strong>The record</strong>
-          <p>Radar, hail and rotation analyses, station observations and official storm reports, each cited to its source.</p>
-        </li>
-        <li>
-          <strong>The finding</strong>
-          <p>What the data show at the site, stated with its uncertainty, ready for a claim file, a deposition or a court.</p>
-        </li>
-      </ul>
+    <section id="pitch" aria-label="Forensic and consulting services">
+      <p class="lede">Standard Weather analyzes and establishes what likely happened or will happen at a location, and documents it in a certified report you can rely on.</p>
     </section>
 
     <div class="fw-look">
@@ -333,6 +316,23 @@
             if (p.get("request") === "report") window.SWContact.prefill(p);
           })();
         </script>
+      </section>
+      <section id="reports" aria-labelledby="reports-h">
+        <h2 id="reports-h">What a certified report contains</h2>
+        <ul class="steps">
+          <li>
+            <strong>The question</strong>
+            <p>The place, the time window, and what has to be established: hail size, peak wind, rainfall, timing, or whether a storm reached the site at all.</p>
+          </li>
+          <li>
+            <strong>The record</strong>
+            <p>Radar, hail and rotation analyses, station observations and official storm reports, each cited to its source.</p>
+          </li>
+          <li>
+            <strong>The finding</strong>
+            <p>What the data show at the site, stated with its uncertainty, ready for a claim file, a deposition or a court.</p>
+          </li>
+        </ul>
       </section>
     </main>
   </div>
