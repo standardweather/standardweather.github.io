@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Standard Weather for iPhone | Coming Soon</title>
-  <meta name="description" content="The Standard Weather suite is coming to iPhone: live radar and warnings, model forecasts, hurricanes, flight weather, field conditions and past-weather lookups in one free app." />
+  <meta name="description" content="The Standard Weather suite is coming to iPhone: archived radar for any storm, live radar and warnings, model maps, hurricanes, flight weather and field conditions in one free app." />
   <meta name="theme-color" content="#070914" />
   <link rel="canonical" href="https://standardweather.github.io/app/" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://standardweather.github.io/app/" />
   <meta property="og:title" content="Standard Weather for iPhone" />
-  <meta property="og:description" content="The whole Standard Weather suite in one free iPhone app. Coming soon to the App Store." />
-  <meta property="og:image" content="https://standardweather.github.io/app/img/icon-default.png" />
+  <meta property="og:description" content="Seven Standard Weather tools in one free iPhone app. Coming soon to the App Store." />
+  <meta property="og:image" content="https://standardweather.github.io/app/img/icon.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Standard Weather for iPhone" />
-  <meta name="twitter:description" content="The whole Standard Weather suite in one free iPhone app. Coming soon to the App Store." />
+  <meta name="twitter:description" content="Seven Standard Weather tools in one free iPhone app. Coming soon to the App Store." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -35,7 +35,7 @@
     .soon::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
 
     /* A phone: the screenshot inside a dark bezel with the Dynamic Island. */
-    .phone { position: relative; margin: 0; width: 100%; aspect-ratio: 390 / 844; padding: 3.2%; border-radius: 15% / 7%; background: linear-gradient(145deg, #2a2e3d, #11131b 60%); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 0 0 2px rgba(0, 0, 0, 0.6), 0 24px 60px rgba(0, 0, 0, 0.55); box-sizing: border-box; }
+    .phone { position: relative; margin: 0; width: 100%; aspect-ratio: 402 / 874; padding: 3.2%; border-radius: 15% / 7%; background: linear-gradient(145deg, #2a2e3d, #11131b 60%); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 0 0 2px rgba(0, 0, 0, 0.6), 0 24px 60px rgba(0, 0, 0, 0.55); box-sizing: border-box; }
     .phone img { display: block; width: 100%; height: 100%; border-radius: 12.5% / 5.8%; object-fit: cover; background: #070914; }
     .phone::after { content: ""; position: absolute; top: 4.6%; left: 50%; width: 29%; height: 3.9%; transform: translateX(-50%); border-radius: 999px; background: #000; }
 
@@ -48,16 +48,16 @@
     .app-stage .phone--front { z-index: 1; }
 
     /* Screenshot gallery: swipe on a phone, a row on a wide screen. */
-    .shots { display: grid; grid-auto-flow: column; grid-auto-columns: min(15rem, 62%); gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0.5rem var(--gutter) 1.25rem; margin: 0 calc(var(--gutter) * -1); list-style: none; scrollbar-width: thin; }
+    .shots { display: grid; grid-auto-flow: column; grid-auto-columns: min(14rem, 62%); gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0.5rem var(--gutter) 1.25rem; margin: 0 calc(var(--gutter) * -1); list-style: none; scrollbar-width: thin; }
     .shots li { scroll-snap-align: center; }
-    .shots b { display: block; margin-top: 1rem; font: 600 1.05rem/1.25 var(--brand); color: #fff; }
-    .shots small { display: block; margin-top: 0.25rem; font-size: 0.86rem; line-height: 1.45; color: var(--text2); }
+    .shots img { display: block; width: 100%; height: auto; border-radius: 22px; border: 1px solid var(--hairline); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45); }
 
-    .icons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin: 0; padding: 0; list-style: none; text-align: center; }
-    @media (min-width: 560px) { .icons { grid-template-columns: repeat(4, 1fr); } }
-    .icons img { display: block; width: min(100%, 7rem); height: auto; margin: 0 auto 0.75rem; border-radius: 22.5%; box-shadow: 0 0 0 0.5px var(--hairline), 0 10px 30px rgba(0, 0, 0, 0.5); }
-    .icons b { display: block; font: 600 1rem/1.25 var(--brand); color: #fff; }
-    .icons small { font-size: 0.82rem; color: var(--text3); }
+    .app-tools { display: grid; gap: 0.8rem; margin: 0 0 1.25rem; padding: 0; list-style: none; }
+    @media (min-width: 680px) { .app-tools { grid-template-columns: 1fr 1fr; } }
+    .app-tools li { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; background: var(--glass); border: 1px solid var(--hairline); border-radius: 16px; }
+    .app-tools img { width: 3.5rem; height: 3.5rem; flex: none; border-radius: 22.5%; box-shadow: 0 0 0 0.5px var(--hairline), 0 6px 18px rgba(0, 0, 0, 0.45); }
+    .app-tools b { display: block; font: 600 1.05rem/1.25 var(--brand); color: #fff; }
+    .app-tools small { display: block; margin-top: 0.2rem; font-size: 0.86rem; line-height: 1.45; color: var(--text2); }
 
     #notify-form { padding: 1.35rem; background: var(--glass); -webkit-backdrop-filter: blur(24px) saturate(1.3); backdrop-filter: blur(24px) saturate(1.3); border: 1px solid var(--hairline); border-radius: var(--radius); box-shadow: 0 8px 36px rgba(0, 0, 0, 0.35); }
     .thanks { padding: 1rem 1.2rem; border: 1px solid rgba(74, 209, 255, 0.35); border-radius: 16px; background: rgba(74, 209, 255, 0.10); color: #fff; max-width: 34rem; }
@@ -84,67 +84,50 @@
 
   <div class="shell">
     <header class="app-hero">
-      <img class="app-icon" src="img/icon-default.png" width="120" height="120" alt="Standard Weather app icon" />
+      <img class="app-icon" src="img/icon.png" width="120" height="120" alt="Standard Weather app icon" />
       <h1>Standard Weather for iPhone</h1>
       <p class="tagline">Coming soon to the App Store</p>
-      <p class="lede">Every Standard Weather tool in one free app: live radar and warnings, model forecasts, hurricanes, flight weather, your fields, and what the weather did at any place and time.</p>
+      <p class="lede">A whole weather service in one free app: archived radar for any storm since 2020, live radar and warnings, weather models drawn from the raw data, every hurricane since 1851, weather for pilots and for your fields.</p>
       <div class="app-cta">
         <a class="btn" href="#notify">Tell me when it's out</a>
         <a class="btn btn--secondary" href="/NowWeather/">Use the web tools now</a>
       </div>
-      <p class="soon">In development for iOS 18 and later</p>
+      <p class="soon">Free · iPhone · iOS 17 and later</p>
     </header>
 
     <div class="app-stage" aria-hidden="true">
-      <figure class="phone phone--side"><img src="img/tropical.webp" width="390" height="844" alt="" /></figure>
-      <figure class="phone phone--front"><img src="img/now.webp" width="390" height="844" alt="" /></figure>
-      <figure class="phone phone--side"><img src="img/forensic.webp" width="390" height="844" alt="" /></figure>
+      <figure class="phone phone--side"><img src="img/phone-past.webp" width="402" height="874" alt="" /></figure>
+      <figure class="phone phone--front"><img src="img/phone-now.webp" width="402" height="874" alt="" /></figure>
+      <figure class="phone phone--side"><img src="img/phone-tropical.webp" width="402" height="874" alt="" /></figure>
     </div>
 
     <main>
       <section aria-labelledby="shots-h">
         <h2 id="shots-h">Screenshots</h2>
         <ul class="shots">
-          <li><figure class="phone"><img src="img/now.webp" width="390" height="844" loading="lazy" alt="NowWeather in the app: live radar, lightning and a list of active warnings" /></figure><b>NowWeather</b><small>Live radar, lightning, watches and warnings, SPC outlooks and your local forecast.</small></li>
-          <li><figure class="phone"><img src="img/future.webp" width="390" height="844" loading="lazy" alt="FutureWeather in the app: a GFS precipitation and pressure map" /></figure><b>FutureWeather</b><small>Model forecast maps, point forecasts, forecast confidence and work windows.</small></li>
-          <li><figure class="phone"><img src="img/tropical.webp" width="390" height="844" loading="lazy" alt="TropicalWeather in the app: a hurricane's forecast cone and model tracks over satellite" /></figure><b>TropicalWeather</b><small>Active storms, forecast cones, model tracks, recon and every storm since 1851.</small></li>
-          <li><figure class="phone"><img src="img/aviation.webp" width="390" height="844" loading="lazy" alt="AviationWeather in the app: flight categories at 3,000 airports with SIGMETs" /></figure><b>AviationWeather</b><small>Flight categories, METARs, TAFs, SIGMETs, G-AIRMETs, PIREPs and winds aloft.</small></li>
-          <li><figure class="phone"><img src="img/forensic.webp" width="390" height="844" loading="lazy" alt="ForensicWeather in the app: archived radar, a tornado warning and storm reports at Mayfield, Kentucky" /></figure><b>ForensicWeather</b><small>Archived radar, hail and rotation swaths, storm reports and lightning for any place and time.</small></li>
-          <li><figure class="phone"><img src="img/farm.webp" width="390" height="844" loading="lazy" alt="FarmWeather in the app: today's field conditions and a drought map" /></figure><b>FarmWeather</b><small>Spray checks, field work windows, growing degree days, frost dates and drought.</small></li>
+          <li><img src="img/store-1-past.webp" width="660" height="1434" loading="lazy" alt="Look back at any storm: PastWeather showing archived radar and hail reports at Greenfield, Iowa" /></li>
+          <li><img src="img/store-2-now.webp" width="660" height="1434" loading="lazy" alt="Live radar, lightning and warnings: NowWeather" /></li>
+          <li><img src="img/store-3-future.webp" width="660" height="1434" loading="lazy" alt="Weather models on your phone: FutureWeather showing a GFS precipitation map" /></li>
+          <li><img src="img/store-4-tropical.webp" width="660" height="1434" loading="lazy" alt="Every storm the NHC tracks: TropicalWeather showing Hurricane Vance's cone and model tracks" /></li>
+          <li><img src="img/store-5-aviation.webp" width="660" height="1434" loading="lazy" alt="Weather for pilots: AviationWeather showing runways and crosswinds" /></li>
+          <li><img src="img/store-6-farm.webp" width="660" height="1434" loading="lazy" alt="Weather for your fields: FarmWeather showing growing degree days for the season" /></li>
+          <li><img src="img/store-7-profile.webp" width="660" height="1434" loading="lazy" alt="Know a property's weather: hurricane history, flood zone and elevation" /></li>
+          <li><img src="img/store-8-more.webp" width="660" height="1434" loading="lazy" alt="A whole weather service: the More tab with the other tools and notable events" /></li>
         </ul>
       </section>
 
-      <section aria-labelledby="iphone-h">
-        <h2 id="iphone-h">Made for iPhone</h2>
-        <div class="services">
-          <article class="service">
-            <h3>Alerts for your places</h3>
-            <p>Save home, work, a property or a field, and get a notification when a warning covers it or lightning moves in.</p>
-          </article>
-          <article class="service">
-            <h3>Widgets</h3>
-            <p>Radar, the next work window and active warnings on your Home Screen and Lock Screen.</p>
-          </article>
-          <article class="service">
-            <h3>One app, six tools</h3>
-            <p>Switch from live radar to the forecast, a hurricane, an airport or last spring's hail without leaving the app.</p>
-          </article>
-          <article class="service">
-            <h3>Free, no account</h3>
-            <p>Like the website: no sign-up and no ads. Certified reports are still requested from ForensicWeather.</p>
-          </article>
-        </div>
-      </section>
-
-      <section aria-labelledby="icon-h">
-        <h2 id="icon-h">App icon</h2>
-        <p>The cloud and horizon from the Standard Weather seal, in four looks to match your Home Screen.</p>
-        <ul class="icons">
-          <li><img src="img/icon-default.png" width="112" height="112" loading="lazy" alt="Default icon: white cloud on indigo" /><b>Default</b><small>Indigo</small></li>
-          <li><img src="img/icon-dark.png" width="112" height="112" loading="lazy" alt="Dark icon: cyan to violet cloud on black" /><b>Dark</b><small>iOS dark mode</small></li>
-          <li><img src="img/icon-tinted.png" width="112" height="112" loading="lazy" alt="Tinted icon: grey cloud on black" /><b>Tinted</b><small>Takes your tint color</small></li>
-          <li><img src="img/icon-light.png" width="112" height="112" loading="lazy" alt="Light icon: indigo cloud on white" /><b>Light</b><small>Alternate icon</small></li>
+      <section aria-labelledby="tools-h">
+        <h2 id="tools-h">Every tool in one app</h2>
+        <ul class="app-tools">
+          <li><img src="img/tools/past.png" width="64" height="64" alt="" /><div><b>PastWeather</b><small>Archived NOAA radar, hail, rotation and storm reports for any address since 2020, and a case file PDF.</small></div></li>
+          <li><img src="img/tools/now.png" width="64" height="64" alt="" /><div><b>NowWeather</b><small>Live radar and lightning, watches, warnings and storm arrival times for your place.</small></div></li>
+          <li><img src="img/tools/future.png" width="64" height="64" alt="" /><div><b>FutureWeather</b><small>GFS, ECMWF, HRRR and NBM maps, drawn on the phone from the raw model data.</small></div></li>
+          <li><img src="img/tools/tropical.png" width="64" height="64" alt="" /><div><b>TropicalWeather</b><small>Cones, model tracks, recon and satellite, plus every hurricane since 1851.</small></div></li>
+          <li><img src="img/tools/aviation.png" width="64" height="64" alt="" /><div><b>AviationWeather</b><small>METARs, TAFs, advisories, PIREPs, winds aloft, runway crosswinds and route briefings.</small></div></li>
+          <li><img src="img/tools/farm.png" width="64" height="64" alt="" /><div><b>FarmWeather</b><small>Spray checks, work windows, growing degree days, frost, soil and drought for your fields.</small></div></li>
+          <li><img src="img/tools/more.png" width="64" height="64" alt="" /><div><b>Property profile</b><small>Hail, wind and tornado history, hurricanes, FEMA flood zone and elevation for an address.</small></div></li>
         </ul>
+        <p class="soft-link">Straight from NOAA and the NWS, free, with no account. Need a certified report? Request one from <a href="/ForensicWeather/#contact">ForensicWeather</a>.</p>
       </section>
 
       <section id="notify" aria-labelledby="notify-h">

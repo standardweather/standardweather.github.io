@@ -55,4 +55,9 @@
     <changefreq>always</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://standardweather.github.io/app/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
