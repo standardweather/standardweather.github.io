@@ -13,6 +13,7 @@ Static GitHub Pages (`.nojekyll`). Contact form → FormSubmit → standardwx@gm
 | `about.html` | About Standard Weather / forensic meteorology |
 | `profile.html` | Property weather profile (`js/profile.js`): hail, wind and tornado history from the pastweather repo's tiles, hurricanes within 50 mi from TropicalWeather's HURDAT2 files, FEMA flood zone, USGS ground height, NWS alerts and 7-day forecast |
 | `FarmWeather/` | FarmWeather (`index.html`, `app.js`): spray check, field work windows, growing degree days, 4-inch soil temperature (nearest Iowa Environmental Mesonet probe, else an air-temperature estimate), chill hours, frost dates, rain against normal, drought and soil moisture for fields saved in the browser. `data/drought.json` is the weekly U.S. Drought Monitor, simplified by `tools/collect_drought.py` (GitHub Actions, `.github/workflows/drought.yml`) |
+| `app/` | Coming-soon page for the Standard Weather iPhone app: the app icon, App Store screenshots and tool icons (`app/img/`, exported from the Xcode project's `AppIcon` and `Screenshots/appstore/`), and a launch-list form (FormSubmit) |
 | `pastweather.html` | Redirect to [ForensicWeather](https://standardweather.github.io/ForensicWeather/) |
 | — | [FutureWeather](https://standardweather.github.io/FutureWeather/) lives in the separate `standardweather/FutureWeather` repo and loads `css/site.css` from this site |
 
