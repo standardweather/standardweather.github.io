@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://standardweather.github.io/sitemap.xml
+Sitemap: https://standardweather.net/sitemap.xml

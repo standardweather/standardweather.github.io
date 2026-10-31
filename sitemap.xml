@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://standardweather.github.io/</loc>
+    <loc>https://standardweather.net/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/about.html</loc>
+    <loc>https://standardweather.net/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/profile.html</loc>
+    <loc>https://standardweather.net/profile.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/case.html</loc>
+    <loc>https://standardweather.net/case.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/events.html</loc>
+    <loc>https://standardweather.net/events.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/ForensicWeather/</loc>
+    <loc>https://standardweather.net/ForensicWeather/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/FutureWeather/</loc>
+    <loc>https://standardweather.net/FutureWeather/</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/FarmWeather/</loc>
+    <loc>https://standardweather.net/FarmWeather/</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/TropicalWeather/</loc>
+    <loc>https://standardweather.net/TropicalWeather/</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/NowWeather/</loc>
+    <loc>https://standardweather.net/NowWeather/</loc>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/AviationWeather/</loc>
+    <loc>https://standardweather.net/AviationWeather/</loc>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://standardweather.github.io/app/</loc>
+    <loc>https://standardweather.net/app/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
