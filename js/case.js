@@ -160,7 +160,7 @@
       ["Link", location.href],
     ].filter(Boolean);
     $("paper").innerHTML = `
-      <div class="cover"><div><h1>Weather case file</h1><p class="meta">Standard Weather Forensics &amp; Consulting · standardweather.github.io</p>
+      <div class="cover"><div><h1>Weather case file</h1><p class="meta">Standard Weather Forensics &amp; Consulting · standardweather.net</p>
         <dl class="facts">${facts.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></div>
         <img src="assets/logo-light.png" alt="" /></div>
       <h3>Contents</h3><ol class="toc">${sections.map((s) => `<li>${esc(HEADINGS[s.key] || s.title)}${s.complete ? "" : " (partly loaded)"}</li>`).join("")}<li>Sources and limits</li></ol>
