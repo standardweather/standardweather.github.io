@@ -1542,7 +1542,7 @@
         Observations: NOAA NCEI Integrated Surface Database and the National Weather Service. Hail sizes from MRMS are radar estimates (MESH), not measurements.
         Warnings: NWS products as archived by the Iowa Environmental Mesonet. Lightning: NOAA GOES Geostationary Lightning Mapper, located to about 3–6 miles.
         Climate normals and records, daily snowfall and snow depth: NOAA Regional Climate Centers (ACIS). Daily peak gusts: NCEI daily summaries (GHCN-Daily).
-        This summary is not a certified weather analysis. For a certified report, contact Standard Weather Forensics &amp; Consulting at standardweather.github.io.</p>`;
+        This summary is not a certified weather analysis. For a certified report, contact Standard Weather Forensics &amp; Consulting at standardweather.net.</p>`;
   }
 
   async function printSummary() {
