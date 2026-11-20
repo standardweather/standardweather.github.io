@@ -8,7 +8,8 @@ Static GitHub Pages (`.nojekyll`). Contact form → FormSubmit → standardwx@gm
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Home: introduction and the free tool cards. Old `/#contact` and `/?request=report` links forward to ForensicWeather |
+| `index.html` | Home: introduction, live tiles (`js/home.js`: active storms or the top tropical outlook chance, GOES lightning and tornado/severe warnings, each FutureWeather model's newest cycle), "Your place" (NWS forecast and alerts for the place saved in this browser as `sw-place`, with links into each tool) and the free tool cards. Old `/#contact` and `/?request=report` links forward to ForensicWeather |
+| `status.html` | Data status: when each feed the sites' GitHub Actions publish last updated, judged against its usual interval (`js/feeds.js`, shared with the home tiles) |
 | `ForensicWeather/` | ForensicWeather (`index.html`, `app.js`, `glm.js`): the forensic and consulting pitch, the archived-weather lookup that was PastWeather, the case file / profile / notable events cards, services and the contact form (FormSubmit). Reads the History and Storm Events files from `/PastWeather/data/`, which the `standardweather/pastweather` repo still builds weekly |
 | `about.html` | About Standard Weather / forensic meteorology |
 | `profile.html` | Property weather profile (`js/profile.js`): hail, wind and tornado history from the pastweather repo's tiles, hurricanes within 50 mi from TropicalWeather's HURDAT2 files, FEMA flood zone, USGS ground height, NWS alerts and 7-day forecast |
