@@ -64,6 +64,7 @@
     .linkish:hover { text-decoration: underline; }
     .linkish:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .place form { display: grid; gap: 0.6rem; }
+    .place [hidden] { display: none !important; }
     @media (min-width: 560px) { .place form { grid-template-columns: 1fr auto auto; align-items: center; } }
     .place form button { min-height: 46px; }
     .place__msg { margin: 0; min-height: 1.2em; font-size: 0.85rem; color: var(--err); max-width: none; }
