@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FarmWeather | Standard Weather</title>
   <meta name="description" content="FarmWeather — spray conditions, field work windows, growing degree days, chill hours, frost dates, rainfall and drought for your fields." />
-  <meta name="theme-color" content="#070914" />
+  <meta name="theme-color" content="#e9edeb" />
   <link rel="canonical" href="https://standardweather.net/FarmWeather/" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://standardweather.net/FarmWeather/" />
@@ -14,15 +14,15 @@
   <meta property="og:image" content="https://standardweather.net/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon-64.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="color-scheme" content="light" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <!-- Shared theme and console layout. -->
-  <link rel="stylesheet" href="/css/site.css?v=20261024a" />
-  <link rel="stylesheet" href="/css/console.css?v=2" />
+  <link rel="stylesheet" href="/css/site.css?v=20261127" />
+  <link rel="stylesheet" href="/css/console.css?v=3" />
   <style>
     /* FarmWeather-only pieces; the shared console layout is in /css/console.css. */
     .fieldbar { flex: none; display: flex; align-items: center; gap: 0.5rem; padding: 0 1.25rem 0.7rem; font-size: 0.82rem; }
@@ -31,10 +31,10 @@
     .linkish { all: unset; cursor: pointer; color: var(--accent); font-size: 0.82rem; }
     .linkish:hover { text-decoration: underline; }
     .verdict { margin: 0 0 0.6rem; padding: 0.55rem 0.75rem; border-radius: 8px; border-left: 4px solid var(--c, #3fcf9a); background: rgba(255, 255, 255, 0.04); }
-    .verdict b { display: block; font: 600 1.02rem/1.3 var(--brand); color: #fff; }
+    .verdict b { display: block; font: 600 1.02rem/1.3 var(--brand); color: var(--ink); }
     .verdict small { display: block; margin-top: 0.2rem; font-size: 0.78rem; color: var(--text2); line-height: 1.45; }
     .stat { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; padding: 0.4rem 0; border-top: 1px solid var(--rule); font-size: 0.84rem; }
-    .stat b { font: 500 1rem var(--mono); color: #fff; white-space: nowrap; }
+    .stat b { font: 500 1rem var(--mono); color: var(--ink); white-space: nowrap; }
     .stat small { display: block; color: var(--text3); font-size: 0.72rem; }
     .hrs { width: 100%; border-collapse: collapse; font: 0.76rem var(--mono); margin-top: 0.3rem; }
     .hrs th { text-align: left; font: 500 0.68rem var(--font); color: var(--text3); padding: 0.15rem 0.2rem 0.3rem 0; }
@@ -52,7 +52,7 @@
     .strip__ticks b { font-weight: 400; width: 25%; }
     .limits-box { margin-top: 0.7rem; font-size: 0.8rem; color: var(--text2); }
     .limits-box summary { cursor: pointer; color: var(--text2); }
-    .limits-box summary:hover { color: #fff; }
+    .limits-box summary:hover { color: var(--ink); }
     .limits { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem 0.7rem; margin-top: 0.75rem; }
     .limits label { display: flex; flex-direction: column; gap: 0.2rem; font: 500 0.7rem var(--font); color: var(--text3); letter-spacing: 0; text-transform: none; }
     .limits input, .limits select { min-height: 0; padding: 0.35rem 0.5rem; font: 0.82rem var(--mono); border-radius: 6px; box-shadow: none; }
@@ -63,7 +63,7 @@
     .chips { padding: 0; margin-top: 0.6rem; }
     .cmp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin: 0.3rem 0 0.2rem; }
     .cmp div { padding: 0.45rem 0.55rem; border: 1px solid var(--rule); border-radius: 6px; }
-    .cmp b { display: block; font: 500 1.05rem var(--mono); color: #fff; }
+    .cmp b { display: block; font: 500 1.05rem var(--mono); color: var(--ink); }
     .cmp small { display: block; font-size: 0.68rem; color: var(--text3); }
     .form select { min-height: 2.2rem; padding: 0 0.5rem; font: 0.88rem var(--font); border-radius: 6px; }
     .form .actions { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; align-items: center; }

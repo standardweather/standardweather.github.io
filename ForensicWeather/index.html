@@ -6,7 +6,7 @@
   <title>ForensicWeather: Forensic Meteorology &amp; Weather Expert Witness | Standard Weather</title>
   <meta name="description" content="Forensic meteorology and weather expert witness support from Standard Weather: certified weather reports, plus free archived NOAA radar, hail swaths, storm reports, warnings, lightning and observations for any place and time." />
   <meta name="keywords" content="forensic meteorologist, weather expert witness, forensic meteorology, weather forensics, hail damage weather analysis, wind vs water claim, historical radar" />
-  <meta name="theme-color" content="#070914" />
+  <meta name="theme-color" content="#e9edeb" />
   <link rel="canonical" href="https://standardweather.net/ForensicWeather/" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://standardweather.net/ForensicWeather/" />
@@ -36,24 +36,26 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon-64.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="color-scheme" content="light" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="/css/site.css?v=20261024a" />
-  <link rel="stylesheet" href="/css/console.css?v=2" />
+  <link rel="stylesheet" href="/css/site.css?v=20261127" />
+  <link rel="stylesheet" href="/css/console.css?v=3" />
   <style>
     /* ForensicWeather: the pitch, then the lookup console at a fixed height, then services and the contact form. */
     .fw-top { padding-bottom: 0; }
-    .fw-top .page-header { padding-bottom: 1.25rem; }
-    .fw-top .lede { margin: 0 auto 1.6rem; text-align: center; }
+    .fw-top { width: min(100% - (var(--gutter) * 2), 84rem); }
+    .fw-top .page-header { border-bottom: 0; margin-bottom: 0; padding-bottom: 1.25rem; }
+    .fw-top .lede { margin: 0 0 1.25rem; }
+    .fw-top section { margin-bottom: 0; }
     .fw-look { margin: 0 0 1.4rem; }
-    .fw-look p { margin: 0; max-width: none; padding: 0.9rem 1.1rem; border: 1px solid rgba(74, 209, 255, 0.3); border-radius: 16px; background: rgba(74, 209, 255, 0.06); font-size: 0.95rem; color: var(--text); }
+    .fw-look p { margin: 0; max-width: 72ch; padding: 0.2rem 0 0.2rem 1rem; border-left: 3px solid var(--accent); color: var(--text); }
     .fw-look a { font-weight: 600; }
     .fw-console { width: min(100% - (var(--gutter) * 2), 84rem); margin: 0 auto clamp(2.25rem, 5vw, 3.25rem); scroll-margin-top: 4.5rem; }
-    .fw-console .app { border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; }
+    .fw-console .app { border-radius: var(--radius); overflow: hidden; }
     @media (min-width: 761px) { .fw-console .app { height: min(86vh, 54rem); min-height: 34rem; } }
     /* No sidebar title: the head only shows the event time once there is one. */
     .fw-console .side__head { justify-content: flex-end; padding-bottom: 0; }
@@ -62,21 +64,21 @@
     /* Lookup console pieces (formerly PastWeather). */
     .report { border-top: 1px solid var(--rule); padding: 0.6rem 1.25rem; cursor: pointer; }
     .report:hover { background: rgba(255, 255, 255, 0.03); }
-    .report .t { display: flex; justify-content: space-between; gap: 0.6rem; font: 600 0.88rem var(--brand); color: #fff; }
+    .report .t { display: flex; justify-content: space-between; gap: 0.6rem; font: 600 0.88rem var(--brand); color: var(--ink); }
     .report .t span { font: 0.74rem var(--mono); color: var(--text3); white-space: nowrap; }
     .report .m { font-size: 0.78rem; color: var(--text2); }
     .report .c { font-size: 0.76rem; color: var(--text3); margin-top: 0.2rem; line-height: 1.45; }
-    .report.sel { background: rgba(74, 209, 255, 0.07); box-shadow: inset 3px 0 0 var(--accent); }
+    .report.sel { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
     .stat { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; padding: 0.35rem 0; border-top: 1px solid var(--rule); font-size: 0.82rem; }
     .stat:first-of-type { border-top: 0; }
-    .stat b { font: 500 1rem var(--mono); color: #fff; white-space: nowrap; }
+    .stat b { font: 500 1rem var(--mono); color: var(--ink); white-space: nowrap; }
     .stat small { display: block; color: var(--text3); font-size: 0.72rem; }
     .scrub .steps { display: flex; gap: 0.15rem; }
     .scrub .steps button { padding: 0 0.25rem; font: 0.74rem var(--mono); color: var(--text2); }
-    .scrub .steps button:hover { color: #fff; }
+    .scrub .steps button:hover { color: var(--ink); }
     .scrub .when { flex: 1; text-align: center; }
     .hint { padding: 1rem 1.25rem; font-size: 0.84rem; color: var(--text2); line-height: 1.55; }
-    .hint b { color: #fff; }
+    .hint b { color: var(--ink); }
     .hint p { margin: 0 0 0.7rem; max-width: none; font-size: 0.84rem; color: var(--text2); line-height: 1.55; }
     .hint ul { margin: 0 0 0.7rem; padding-left: 1.1rem; }
     .hint li { margin: 0 0 0.35rem; }
@@ -89,20 +91,20 @@
     .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
     .actions a, .actions button { all: unset; cursor: pointer; font-size: 0.8rem; color: var(--accent); }
     .actions a:hover, .actions button:hover { text-decoration: underline; }
-    .actions .cta { color: #060818; background: var(--accent); padding: 0.35rem 0.7rem; border-radius: 6px; font-weight: 600; }
+    .actions .cta { color: var(--on-accent); background: var(--accent); padding: 0.35rem 0.7rem; border-radius: 6px; font-weight: 600; }
     .actions .cta:hover { text-decoration: none; filter: brightness(1.1); }
     table.t tr.go { cursor: pointer; }
     table.t tr.go:hover { background: rgba(255, 255, 255, 0.04); }
-    .verdict { margin: 0.5rem 0 0.4rem; padding: 0.1rem 0.7rem 0.5rem; border-left: 3px solid var(--accent); background: rgba(74, 209, 255, 0.05); }
-    .verdict .note b { color: #fff; }
+    .verdict { margin: 0.5rem 0 0.4rem; padding: 0.1rem 0.7rem 0.5rem; border-left: 3px solid var(--accent); background: var(--accent-soft); }
+    .verdict .note b { color: var(--ink); }
     .scrub .replay-btn { min-width: 0; padding: 0.1rem 0.5rem; border: 1px solid var(--rule); border-radius: 5px; font: 0.74rem var(--mono); color: var(--accent); white-space: nowrap; }
-    .scrub .replay-btn[aria-pressed="true"] { background: var(--accent); color: #060818; }
+    .scrub .replay-btn[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
     .replay {
       position: absolute; z-index: 800; left: 1rem; bottom: 3.6rem; width: min(34rem, calc(100% - 2rem));
-      display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem 0.7rem; padding: 0.5rem 0.8rem; background: rgba(8, 10, 24, 0.88);
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem 0.7rem; padding: 0.5rem 0.8rem; background: rgba(12, 22, 21, 0.88);
       border: 1px solid var(--rule); border-radius: 8px; font: 0.74rem var(--mono); color: var(--text2);
     }
-    .replay button { all: unset; cursor: pointer; color: #fff; }
+    .replay button { all: unset; cursor: pointer; color: var(--ink); }
     .replay button:disabled { opacity: 0.35; cursor: default; }
     .replay button[data-replay="toggle"] { min-width: 1.4rem; text-align: center; font-size: 0.85rem; }
     .replay button[data-replay="video"] { color: var(--accent); }
@@ -110,9 +112,9 @@
     .replay .info { flex-basis: 100%; order: 3; color: var(--text3); }
     .replay .spans { display: flex; gap: 0.7rem; order: 2; }
     .replay .spans button { color: var(--text2); }
-    .replay .spans button[aria-pressed="true"] { color: #fff; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.3em; }
+    .replay .spans button[aria-pressed="true"] { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.3em; }
     .account { margin-top: 0.9rem; padding-top: 0.2rem; border-top: 1px solid var(--rule); }
-    .account p { font-size: 0.82rem; line-height: 1.55; color: rgba(255, 255, 255, 0.86); margin: 0.45rem 0 0; max-width: none; }
+    .account p { font-size: 0.82rem; line-height: 1.55; color: var(--text); margin: 0.45rem 0 0; max-width: none; }
     .account p.note { color: var(--text3); font-size: 0.74rem; }
     #printout { display: none; }
     /* Print summary: the map, then the summary, reports and observations on white. */

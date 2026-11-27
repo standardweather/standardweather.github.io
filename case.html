@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weather Case File | Standard Weather</title>
   <meta name="description" content="One printable case file for a place and time: archived radar, hail, storm reports, NWS warnings, lightning, observations, a written account, the hurricane wind-or-water timeline and the airport weather record." />
-  <meta name="theme-color" content="#070914" />
+  <meta name="theme-color" content="#e9edeb" />
   <link rel="canonical" href="https://standardweather.net/case.html" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://standardweather.net/case.html" />
@@ -14,12 +14,12 @@
   <meta property="og:image" content="https://standardweather.net/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <meta name="color-scheme" content="dark" />
-  <link rel="stylesheet" href="css/site.css?v=20261024a" />
+  <meta name="color-scheme" content="light" />
+  <link rel="stylesheet" href="css/site.css?v=20261127" />
   <style>
     .case-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.7rem 0.9rem; margin-top: 0.9rem; align-items: end; }
     .case-form label { display: block; font-size: 0.82rem; opacity: 0.75; margin-bottom: 0.25rem; }
@@ -27,9 +27,9 @@
     .case-form .wide { grid-column: 1 / -1; }
     .case-form .checks { display: flex; flex-wrap: wrap; gap: 0.4rem 1.3rem; font-size: 0.9rem; }
     .case-form .checks label { display: flex; align-items: center; gap: 0.45rem; opacity: 1; margin: 0; }
-    .case-form .err { color: #ff8a80; margin: 0; font-size: 0.9rem; }
+    .case-form .err { color: var(--err); margin: 0; font-size: 0.9rem; }
     .progress { list-style: none; padding: 0; margin: 1.2rem 0 0; font-size: 0.92rem; }
-    .progress li { display: flex; gap: 0.6rem; padding: 0.3rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+    .progress li { display: flex; gap: 0.6rem; padding: 0.3rem 0; border-top: 1px solid var(--hairline); }
     .progress li b { width: 1.2rem; text-align: center; }
     .progress li small { opacity: 0.65; margin-left: auto; text-align: right; }
     .case-bar { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; margin: 1.4rem 0 0.8rem; }
@@ -37,11 +37,11 @@
     #frames iframe { width: 1200px; height: 820px; border: 0; }
 
     /* The case file itself: a white page, in print and on screen. */
-    .paper { background: #fff; color: #161616; border-radius: 6px; padding: 0.55in 0.6in; font: 10.5pt/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45); }
+    .paper { background: #fff; color: #161616; border-radius: 6px; padding: 0.55in 0.6in; font: 10.5pt/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; box-shadow: 0 0 0 1px var(--hairline), 0 12px 32px rgba(15, 29, 28, 0.12); }
     .paper * { color: inherit; }
-    .paper h1 { font: 700 21pt Outfit, system-ui, sans-serif; margin: 0 0 0.05in; color: #000; }
-    .paper h2 { font: 600 14pt Outfit, system-ui, sans-serif; margin: 0.3in 0 0.08in; padding-bottom: 0.04in; border-bottom: 2px solid #111; color: #000; }
-    .paper h3, .paper .case-sec h1, .paper .case-sec h2 { font: 600 11.5pt Outfit, system-ui, sans-serif; margin: 0.2in 0 0.06in; padding: 0; border-bottom: 1px solid #bbb; color: #000; }
+    .paper h1 { font: 800 21pt Archivo, system-ui, sans-serif; margin: 0 0 0.05in; color: #000; }
+    .paper h2 { font: 700 14pt Archivo, system-ui, sans-serif; margin: 0.3in 0 0.08in; padding-bottom: 0.04in; border-bottom: 2px solid #111; color: #000; }
+    .paper h3, .paper .case-sec h1, .paper .case-sec h2 { font: 700 11.5pt Archivo, system-ui, sans-serif; margin: 0.2in 0 0.06in; padding: 0; border-bottom: 1px solid #bbb; color: #000; }
     .paper h5 { font: 600 10.5pt system-ui, sans-serif; margin: 0.16in 0 0.04in; color: #000 !important; }
     .paper p { margin: 0.05in 0; max-width: none; }
     .paper .meta, .paper .note, .paper small, .paper .chart-key { color: #555; font-size: 8.8pt; }
